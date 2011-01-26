@@ -5,6 +5,7 @@ import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.ChatColor;
 /**
  * Handle events for all Player related events
  * @author cian1500ww
@@ -42,7 +43,7 @@ public class GiPlayerListener extends PlayerListener {
     					ItemStack itemstack = new ItemStack(Integer.valueOf(command[1]));
     					itemstack.setAmount(Integer.parseInt(command[2]));
     					inventory.addItem(itemstack);
-    					player.sendMessage("Item added to your inventory!!");
+    					player.sendMessage(ChatColor.BLUE+ "Item added to your inventory!!");
     					check = false;
     				}
     			
@@ -50,8 +51,8 @@ public class GiPlayerListener extends PlayerListener {
     	}
     		
     		if(check==true){
-    			player.sendMessage("Item number or amount is not allowed");
-				player.sendMessage("Command is: /giveme <itemid> <amount>");
+    			player.sendMessage(ChatColor.RED+ "Item number or amount is not allowed");
+				player.sendMessage(ChatColor.YELLOW+ "Command is: /giveme <itemid> <amount>");
     		}
     			
     	}
