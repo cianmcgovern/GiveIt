@@ -6,10 +6,14 @@ import org.bukkit.event.player.PlayerListener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.ChatColor;
+import java.io.*;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 /**
  * Handle events for all Player related events
  * @author cian1500ww
- * @version 0.0.1
+ * @version 0.0.2
  */
 public class GiPlayerListener extends PlayerListener {
     private final GiveIt plugin;
@@ -45,6 +49,7 @@ public class GiPlayerListener extends PlayerListener {
     					inventory.addItem(itemstack);
     					player.sendMessage(ChatColor.BLUE+ "Item added to your inventory!!");
     					check = false;
+    					writeOut(player, command[1], command[2]);
     				}
     			
     				counter++;
@@ -57,5 +62,34 @@ public class GiPlayerListener extends PlayerListener {
     			
     	}
     	
+    }
+    
+    public void writeOut(Player player, String item, String amount){
+    	
+    	try {
+    	
+    		String name = player.getDisplayName();
+    		BufferedWriter out = new BufferedWriter(new FileWriter("plugins/GiveIt/GiveIt.log", true));
+    		out.write(getDateTime());
+    		out.write(" ");
+    		out.write(name);
+    		out.write(" ");
+    		out.write(item);
+    		out.write(" ");
+    		out.write(amount);
+    		out.newLine();
+    		out.close();
+    		
+    	}
+    	
+    	catch (Exception e){
+    		e.printStackTrace();
+    	}
+    }
+    
+    private String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 }

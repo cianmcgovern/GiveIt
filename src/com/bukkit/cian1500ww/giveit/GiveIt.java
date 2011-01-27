@@ -16,7 +16,7 @@ import org.bukkit.plugin.PluginManager;
  * GiveIt for Bukkit
  *
  * @author cian1500ww
- * @version 0.0.1
+ * @version 0.0.2
  */
 
 public class GiveIt extends JavaPlugin {
@@ -25,6 +25,7 @@ public class GiveIt extends JavaPlugin {
 	public BufferedReader br;
     public String[] str = new String[1000];
     public String[] str2 = new String[1000];
+    public String[] str3 = new String[1000];
 
     private final GiPlayerListener playerListener = new GiPlayerListener(this);
     private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
@@ -61,6 +62,7 @@ public class GiveIt extends JavaPlugin {
     	catch (Exception e) {
     		e.printStackTrace();
     	}
+    	
     	
         // Register our events
         PluginManager pm = getServer().getPluginManager();
