@@ -9,7 +9,7 @@ import org.bukkit.ChatColor;
 /**
  * Handle events for all Player related events
  * @author cian1500ww
- * @version 0.1
+ * @version 0.0.1
  */
 public class GiPlayerListener extends PlayerListener {
     private final GiveIt plugin;

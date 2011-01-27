@@ -16,7 +16,7 @@ import org.bukkit.plugin.PluginManager;
  * GiveIt for Bukkit
  *
  * @author cian1500ww
- * @version 0.1
+ * @version 0.0.1
  */
 
 public class GiveIt extends JavaPlugin {
@@ -46,7 +46,7 @@ public class GiveIt extends JavaPlugin {
     	
     	int counter = 0;
     	try {
-    		BufferedReader br =  new BufferedReader(new FileReader("plugins/GiveIt/GiveIt.txt"));
+    		BufferedReader br =  new BufferedReader(new FileReader("plugins/GiveIt/allowed.txt"));
     		String line;
     		while (( line = br.readLine()) != null) {
     			if (!line.startsWith("#")) {
