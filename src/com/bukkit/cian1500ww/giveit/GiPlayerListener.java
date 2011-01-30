@@ -70,16 +70,18 @@ public class GiPlayerListener extends PlayerListener {
     		String f = "plugins/GiveIt/GiveIt.log";
     		File file = new File(f);
     		
-    		boolean create = file.createNewFile();
+    		file.createNewFile();
     			String name = player.getDisplayName();
     			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
     			out.write(getDateTime());
     			out.write(" ");
     			out.write(name);
     			out.write(" ");
-    			out.write(item);
-    			out.write(" ");
+    			out.write("gave themselves ");
     			out.write(amount);
+    			out.write(" ");
+    			out.write("of ");
+    			out.write(item);
     			out.newLine();
     			out.close();
     		

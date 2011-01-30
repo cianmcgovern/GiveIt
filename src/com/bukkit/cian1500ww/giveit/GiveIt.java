@@ -42,9 +42,22 @@ public class GiveIt extends JavaPlugin {
     public void onEnable() {
         // TODO: Place any custom enable code here including the registration of any events
     	
-    	// Initialise counter for use in file read
-    	// monitor a single file
-    	
+    	String f = "plugins/GiveIt/allowed.txt";
+    	File in = new File(f);
+    	if(in.exists()!=true){
+    		try{
+    		
+    		System.out.println("No allowed.txt file found, creating default now!!");
+    		in.createNewFile();
+    		BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
+    		out.write("#ItemID Amount");
+    		out.close();
+    		}
+    		catch (IOException e){
+    			System.out.println("Error!!");
+    		}
+    	}
+    	else{
         TimerTask task = new FileWatcher( new File("plugins/GiveIt/allowed.txt") ) {
           protected void onChange( File file ) {
             // here we code the action on a change
@@ -56,6 +69,7 @@ public class GiveIt extends JavaPlugin {
 				e.printStackTrace();
 			}
           }
+        
         };
 
         Timer timer = new Timer();
@@ -64,16 +78,16 @@ public class GiveIt extends JavaPlugin {
         
     	
     	try {
-    		File f = new File("plugins/GiveIt/GiveIt.log");
-    		if(f.exists()){
-    			f.delete();
+    		File n = new File("plugins/GiveIt/GiveIt.log");
+    		if(n.exists()){
+    			n.delete();
     		}
     		fillArray();
     	}
     	catch (Exception e) {
     		e.printStackTrace();
     	}
-    	
+    	}
     	
         // Register our events
         PluginManager pm = getServer().getPluginManager();
@@ -95,18 +109,19 @@ public class GiveIt extends JavaPlugin {
     }
     public void fillArray() throws IOException{
     	BufferedReader br =  new BufferedReader(new FileReader("plugins/GiveIt/allowed.txt"));
-		String line;
-		int counter = 0;
-		while (( line = br.readLine()) != null) {
-			if (!line.startsWith("#")) {
-				int position = line.indexOf(" ");
-				int length = line.length();
-				str[counter] = line.substring(0, (position));
-				str2[counter] = line.substring((position+1),(length));
-				counter++;
-			}
-		}
+    	String line;
+    	int counter = 0;
+    	while (( line = br.readLine()) != null) {
+    		if (!line.startsWith("#")) {
+    			int position = line.indexOf(" ");
+    			int length = line.length();
+    			str[counter] = line.substring(0, (position));
+    			str2[counter] = line.substring((position+1),(length));
+    			counter++;
+    		}
+    	}
     }
+    
     public boolean isDebugging(final Player player) {
         if (debugees.containsKey(player)) {
             return debugees.get(player);
