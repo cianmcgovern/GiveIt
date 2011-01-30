@@ -1,8 +1,7 @@
 package com.bukkit.cian1500ww.giveit;
 
 import java.io.*;
-
-import java.util.HashMap;
+import java.util.*;
 import org.bukkit.entity.Player;
 import org.bukkit.Server;
 import org.bukkit.event.Event.Priority;
@@ -44,20 +43,32 @@ public class GiveIt extends JavaPlugin {
         // TODO: Place any custom enable code here including the registration of any events
     	
     	// Initialise counter for use in file read
+    	// monitor a single file
     	
-    	int counter = 0;
+        TimerTask task = new FileWatcher( new File("plugins/GiveIt/allowed.txt") ) {
+          protected void onChange( File file ) {
+            // here we code the action on a change
+            System.out.println( "The GiveIt configuration file "+ file.getName() +" has changed, reloading now!!" );
+            try {
+				fillArray();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+          }
+        };
+
+        Timer timer = new Timer();
+        // repeat the check every second
+        timer.schedule( task , new Date(), 1000 );
+        
+    	
     	try {
-    		BufferedReader br =  new BufferedReader(new FileReader("plugins/GiveIt/allowed.txt"));
-    		String line;
-    		while (( line = br.readLine()) != null) {
-    			if (!line.startsWith("#")) {
-    				int position = line.indexOf(" ");
-    				int length = line.length();
-    				str[counter] = line.substring(0, (position));
-    				str2[counter] = line.substring((position+1),(length));
-    				counter++;
-    			}
+    		File f = new File("plugins/GiveIt/GiveIt.log");
+    		if(f.exists()){
+    			f.delete();
     		}
+    		fillArray();
     	}
     	catch (Exception e) {
     		e.printStackTrace();
@@ -81,6 +92,20 @@ public class GiveIt extends JavaPlugin {
 
         // EXAMPLE: Custom code, here we just output some info so we can check all is well
         System.out.println("Goodbye world!");
+    }
+    public void fillArray() throws IOException{
+    	BufferedReader br =  new BufferedReader(new FileReader("plugins/GiveIt/allowed.txt"));
+		String line;
+		int counter = 0;
+		while (( line = br.readLine()) != null) {
+			if (!line.startsWith("#")) {
+				int position = line.indexOf(" ");
+				int length = line.length();
+				str[counter] = line.substring(0, (position));
+				str2[counter] = line.substring((position+1),(length));
+				counter++;
+			}
+		}
     }
     public boolean isDebugging(final Player player) {
         if (debugees.containsKey(player)) {
