@@ -19,17 +19,11 @@ import org.bukkit.plugin.PluginManager;
  */
 
 public class GiveIt extends JavaPlugin {
-	
-	// Initialise array for storing file details
-	public BufferedReader br;
-    public String[] str = new String[1000];
-    public String[] str2 = new String[1000];
-    public String[] str3 = new String[1000];
 
     private final GiPlayerListener playerListener = new GiPlayerListener(this);
     private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
     
-
+    
     public GiveIt(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File Folder, File plugin, ClassLoader cLoader) {
         super(pluginLoader, instance, desc, Folder,plugin, cLoader);
         // TODO: Place any custom initialisation code here
@@ -40,54 +34,33 @@ public class GiveIt extends JavaPlugin {
     
 
     public void onEnable() {
-        // TODO: Place any custom enable code here including the registration of any events
-    	
+        
+    	// Check to see if allowed.txt exists, if not create a blank one
     	String f = "plugins/GiveIt/allowed.txt";
     	File in = new File(f);
     	if(in.exists()!=true){
-    		try{
-    		
-    		System.out.println("No allowed.txt file found, creating default now!!");
+    		try {
+    		System.out.println("No allowed.txt file found, creating blank default now!!");
     		in.createNewFile();
-    		BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
-    		out.write("#ItemID Amount");
-    		out.close();
     		}
     		catch (IOException e){
-    			System.out.println("Error!!");
+    			System.out.println("Error creating allowed.txt file!!");
     		}
     	}
-    	else{
-        TimerTask task = new FileWatcher( new File("plugins/GiveIt/allowed.txt") ) {
-          protected void onChange( File file ) {
-            // here we code the action on a change
-            System.out.println( "The GiveIt configuration file "+ file.getName() +" has changed, reloading now!!" );
-            try {
-				fillArray();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-          }
-        
-        };
-
-        Timer timer = new Timer();
-        // repeat the check every second
-        timer.schedule( task , new Date(), 1000 );
-        
     	
+    	// Check to see if log file exists from previous instance and delete if true
     	try {
     		File n = new File("plugins/GiveIt/GiveIt.log");
     		if(n.exists()){
     			n.delete();
+    			n.createNewFile();
     		}
-    		fillArray();
+    		
     	}
     	catch (Exception e) {
     		e.printStackTrace();
     	}
-    	}
+    	
     	
         // Register our events
         PluginManager pm = getServer().getPluginManager();
@@ -98,7 +71,9 @@ public class GiveIt extends JavaPlugin {
         // EXAMPLE: Custom code, here we just output some info so we can check all is well
         PluginDescriptionFile pdfFile = this.getDescription();
         System.out.println( pdfFile.getName() + " version " + pdfFile.getVersion() + " by cian1500ww is enabled!" );
+        
     }
+    
     public void onDisable() {
         // TODO: Place any custom disable code here
 
@@ -107,20 +82,7 @@ public class GiveIt extends JavaPlugin {
         // EXAMPLE: Custom code, here we just output some info so we can check all is well
         System.out.println("Goodbye world!");
     }
-    public void fillArray() throws IOException{
-    	BufferedReader br =  new BufferedReader(new FileReader("plugins/GiveIt/allowed.txt"));
-    	String line;
-    	int counter = 0;
-    	while (( line = br.readLine()) != null) {
-    		if (!line.startsWith("#")) {
-    			int position = line.indexOf(" ");
-    			int length = line.length();
-    			str[counter] = line.substring(0, (position));
-    			str2[counter] = line.substring((position+1),(length));
-    			counter++;
-    		}
-    	}
-    }
+    
     
     public boolean isDebugging(final Player player) {
         if (debugees.containsKey(player)) {

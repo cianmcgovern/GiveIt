@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.ChatColor;
 import java.io.*;
-import java.util.Date;
+import java.util.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 /**
@@ -32,58 +32,60 @@ public class GiPlayerListener extends PlayerListener {
     	Player player = event.getPlayer();
     	PlayerInventory inventory = player.getInventory();
     	
-    	int counter = 0;
-    	boolean check = true;
-    	
-    	// Check to see if player enter's command
+    	// Check to see if player enter's /giveme command
     	if(command[0].equalsIgnoreCase("/giveme")){
-    		
-    		while(plugin.str[counter]!=null){
+    		Properties prop = new Properties();
+    		try {
+    			InputStream is = new FileInputStream("plugins/GiveIt/allowed.txt");
+				prop.load(is);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+				//Check the allowed.txt file for requested items
+    			if(prop.getProperty(command[1])!=null && Integer.parseInt(command[2])<=(Integer.parseInt(prop.getProperty(command[1])))){
+    				ItemStack itemstack = new ItemStack(Integer.valueOf(command[1]));
+    				itemstack.setAmount(Integer.parseInt(command[2]));
+    				inventory.addItem(itemstack);
+    				player.sendMessage(ChatColor.BLUE+ "Item added to your inventory!!");
+    				// Log the player's requested items to log file
+    				writeOut(player, command[1], command[2]);
+    			}
     			
+    			// Send a message to the player if command isn't allowed or is incorrect
+    			else{
+        			player.sendMessage(ChatColor.RED+ "Item number or amount is not allowed");
+    				player.sendMessage(ChatColor.YELLOW+ "Command is: /giveme <itemid> <amount>");
+        		}
     			
-    				if(plugin.str[counter].equalsIgnoreCase(command[1]) && 
-    						(Integer.parseInt(plugin.str2[counter])>=(Integer.parseInt(command[2]))) && 
-    						!command[1].equalsIgnoreCase("0") && !command[2].equalsIgnoreCase("0")){
-    					ItemStack itemstack = new ItemStack(Integer.valueOf(command[1]));
-    					itemstack.setAmount(Integer.parseInt(command[2]));
-    					inventory.addItem(itemstack);
-    					player.sendMessage(ChatColor.BLUE+ "Item added to your inventory!!");
-    					check = false;
-    					writeOut(player, command[1], command[2]);
-    				}
-    			
-    				counter++;
     	}
     		
-    		if(check==true){
-    			player.sendMessage(ChatColor.RED+ "Item number or amount is not allowed");
-				player.sendMessage(ChatColor.YELLOW+ "Command is: /giveme <itemid> <amount>");
-    		}
+    		
     			
-    	}
+    	
     	
     }
-    
+    // Adds each players requested items to GiveIt.log
     public void writeOut(Player player, String item, String amount){
     	
     	try {
     		String f = "plugins/GiveIt/GiveIt.log";
-    		File file = new File(f);
     		
-    		file.createNewFile();
-    			String name = player.getDisplayName();
-    			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
-    			out.write(getDateTime());
-    			out.write(" ");
-    			out.write(name);
-    			out.write(" ");
-    			out.write("gave themselves ");
-    			out.write(amount);
-    			out.write(" ");
-    			out.write("of ");
-    			out.write(item);
-    			out.newLine();
-    			out.close();
+    		String name = player.getDisplayName();
+    		BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
+    		out.write(getDateTime());
+    		out.write(" ");
+    		out.write(name);
+    		out.write(" ");
+    		out.write("gave themselves ");
+    		out.write(amount);
+    		out.write(" ");
+    		out.write("of ");
+    		out.write(item);
+    		out.newLine();
+    		out.close();
     		
     	}
     	
