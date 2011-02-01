@@ -17,7 +17,8 @@ import java.text.SimpleDateFormat;
  */
 public class GiPlayerListener extends PlayerListener {
     private final GiveIt plugin;
-
+    private int amount = 0;
+    private String name = null;
     public GiPlayerListener(GiveIt instance) {
         plugin = instance;
     }
@@ -43,9 +44,15 @@ public class GiPlayerListener extends PlayerListener {
 				e.printStackTrace();
 			}
 			
-			
-				//Check the allowed.txt file for requested items
-    			if(prop.getProperty(command[1])!=null && Integer.parseInt(command[2])<=(Integer.parseInt(prop.getProperty(command[1])))){
+			if(prop.getProperty(command[1]).contains(".")==true){
+				
+				String in = prop.getProperty(command[1]);
+				int position = in.indexOf(".");
+				amount = Integer.parseInt(in.substring(0, position));
+				name = in.substring(position+1,in.length());
+				System.out.println(amount);
+				System.out.println(name);
+				if(prop.getProperty(command[1])!=null && Integer.parseInt(command[2])<=amount && name.equalsIgnoreCase(player.getName())){
     				ItemStack itemstack = new ItemStack(Integer.valueOf(command[1]));
     				itemstack.setAmount(Integer.parseInt(command[2]));
     				inventory.addItem(itemstack);
@@ -53,13 +60,24 @@ public class GiPlayerListener extends PlayerListener {
     				// Log the player's requested items to log file
     				writeOut(player, command[1], command[2]);
     			}
-    			
-    			// Send a message to the player if command isn't allowed or is incorrect
-    			else{
-        			player.sendMessage(ChatColor.RED+ "Item number or amount is not allowed");
-    				player.sendMessage(ChatColor.YELLOW+ "Command is: /giveme <itemid> <amount>");
-        		}
-    			
+			
+				else if(prop.getProperty(command[1]).contains(".")==false){
+					if(prop.getProperty(command[1])!=null && Integer.parseInt(command[2])<=amount){
+						ItemStack itemstack = new ItemStack(Integer.valueOf(command[1]));
+						itemstack.setAmount(Integer.parseInt(command[2]));
+						inventory.addItem(itemstack);
+						player.sendMessage(ChatColor.BLUE+ "Item added to your inventory!!");
+						// Log the player's requested items to log file
+						writeOut(player, command[1], command[2]);
+					}
+				}
+			
+				// Send a message to the player if command isn't allowed or is incorrect
+				else{
+					player.sendMessage(ChatColor.RED+ "Item number or amount is not allowed");
+					player.sendMessage(ChatColor.YELLOW+ "Command is: /giveme <itemid> <amount>");
+				}
+			}
     	}
     		
     		
