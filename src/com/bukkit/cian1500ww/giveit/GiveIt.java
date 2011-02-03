@@ -15,7 +15,7 @@ import org.bukkit.plugin.PluginManager;
  * GiveIt for Bukkit
  *
  * @author cian1500ww
- * @version 0.0.2
+ * @version 0.0.3
  */
 
 public class GiveIt extends JavaPlugin {
