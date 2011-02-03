@@ -36,15 +36,24 @@ public class GiveIt extends JavaPlugin {
     public void onEnable() {
         
     	// Check to see if allowed.txt exists, if not create a blank one
+    	String dir = "plugins/GiveIt";
+    	boolean success = (new File(dir)).exists();
+    		if (success==false) {
+    			new File(dir).mkdir();
+    			System.out.println(dir+ " not found, creating directory now!!");
+    	}
     	String f = "plugins/GiveIt/allowed.txt";
     	File in = new File(f);
     	if(in.exists()!=true){
     		try {
     		System.out.println("No allowed.txt file found, creating blank default now!!");
     		in.createNewFile();
+    		BufferedWriter out = new BufferedWriter(new FileWriter(in, true));
+    		out.write("#ItemID=Amount.username");
+    		out.close();
     		}
     		catch (IOException e){
-    			System.out.println("Error creating allowed.txt file!!");
+    			System.out.println("GiveIt: Error creating allowed.txt file!!");
     		}
     	}
     	
@@ -58,7 +67,7 @@ public class GiveIt extends JavaPlugin {
     		
     	}
     	catch (Exception e) {
-    		e.printStackTrace();
+    		System.out.println("GiveIt: Problem creating new GiveIt.log");
     	}
     	
     	
