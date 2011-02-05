@@ -1,3 +1,20 @@
 name: GiveIt
 main: com.bukkit.cian1500ww.giveit.GiveIt
 version: 0.0.3
+website: http://www.majorgaming.eu
+author: cian1500ww
+description: >
+             Customisable plugin that allows only certain amounts of items to be given.
+             Can also restrict certain items to certain players
+commands:
+  giveme:
+    description: Give yourself items
+    usage: |
+           /<command> [item] [amount]
+           Example: /<command> 278 1
+           
+  givemeinfo:
+     description: Shows available items that can be given using /giveme
+     usage: |
+           /<command>
+           Example: /<command>
