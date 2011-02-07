@@ -12,15 +12,18 @@ import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.java.JavaPlugin;
+import com.nijikokun.bukkit.Permissions.Permissions;
+import com.nijiko.permissions.PermissionHandler;
 
 /**
  * GiveIt for Bukkit
  *
  * @author cian1500ww cian1500ww@gmail.com
- * @version 1.0
+ * @version 1.1
  */
 
 public class GiveIt extends JavaPlugin {
@@ -29,7 +32,8 @@ public class GiveIt extends JavaPlugin {
     private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
     private int amount = 0;
     private String name = null;
-    
+    public static PermissionHandler Permissions = null;
+    public boolean perm = true;
     public GiveIt(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File Folder, File plugin, ClassLoader cLoader) {
         super(pluginLoader, instance, desc, Folder,plugin, cLoader);
         // TODO: Place any custom initialisation code here
@@ -38,7 +42,8 @@ public class GiveIt extends JavaPlugin {
     }
 
     public void onEnable() {
-        
+        // Check to see if Permissions plugin is being used
+    	setupPermissions();
     	// Check to see if allowed.txt exists, if not create a blank one
     	String dir = "plugins/GiveIt";
     	boolean success = (new File(dir)).exists();
@@ -84,7 +89,7 @@ public class GiveIt extends JavaPlugin {
         // EXAMPLE: Custom code, here we just output some info so we can check all is well
         PluginDescriptionFile pdfFile = this.getDescription();
         System.out.println( pdfFile.getName() + " version " + pdfFile.getVersion() + " by cian1500ww is enabled!" );
-        System.out.println("GiveIt: Email cian15000ww@gmail.com if you're having problems");
+        System.out.println("GiveIt: Email cian1500ww@gmail.com if you're having problems");
     }
     
     
@@ -92,10 +97,20 @@ public class GiveIt extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args){
     	String[] trimmedArgs = args;   
         String commandName = command.getName().toLowerCase();
-    		
+        Player player = (Player)sender;
+        
     	// Check to see if player enter's /giveme command
     	if(commandName.equals("giveme") && trimmedArgs.length > 1){
-			return giveme(sender,trimmedArgs);
+    		
+    		// Check for permission
+        	if(perm == true && !Permissions.has(player, "giveit.allow") ){
+        		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
+        		return true;
+        	}
+        	else{
+        		return giveme(sender,trimmedArgs);
+        	}
+    		
     	}
     		
     	else if(commandName.equalsIgnoreCase("givemeinfo")){
@@ -106,10 +121,12 @@ public class GiveIt extends JavaPlugin {
     
     private boolean giveme(CommandSender sender, String[] trimmedArgs){
     	
+    	
     	if ((trimmedArgs[0] == null) || (trimmedArgs[1]== null) || (trimmedArgs[0].length() > 3)) {
              return false;
         }
     	Player player = (Player)sender;
+    	
     	PlayerInventory inventory = player.getInventory();
     	Properties prop = new Properties();
 		try {
@@ -220,6 +237,22 @@ public class GiveIt extends JavaPlugin {
         Date date = new Date();
         return dateFormat.format(date);
     }
+    
+    // Class for setting up Permissions
+    public void setupPermissions() {
+    	Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
+
+    	if(this.Permissions == null) {
+    	    if(test != null) {
+    		this.Permissions = ((Permissions)test).getHandler();
+    		System.out.println("GiveIt: Permissions support enabled");
+    	    } 
+    	    else {
+    		System.out.println("GiveIt: Permissions not enabled, disabling Permissions support");
+    		perm = false;
+    	    }
+    	}
+        }
     
     public void onDisable() {
         // TODO: Place any custom disable code here
