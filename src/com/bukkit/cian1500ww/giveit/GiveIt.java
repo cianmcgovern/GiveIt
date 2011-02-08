@@ -1,8 +1,6 @@
 package com.bukkit.cian1500ww.giveit;
 
 import java.io.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.bukkit.command.Command;
@@ -10,8 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
@@ -28,12 +24,14 @@ import com.nijiko.permissions.PermissionHandler;
 
 public class GiveIt extends JavaPlugin {
 
-    //private final GiPlayerListener playerListener = new GiPlayerListener(this);
     private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
-    private int amount = 0;
-    private String name = null;
+    public static int amount = 0;
+    public static String name = null;
     public static PermissionHandler Permissions = null;
     public boolean perm = true;
+    
+    private final Giveme give = new Giveme();
+    private final GiveMeInfo givemeinfo = new GiveMeInfo();
     public GiveIt(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File Folder, File plugin, ClassLoader cLoader) {
         super(pluginLoader, instance, desc, Folder,plugin, cLoader);
         // TODO: Place any custom initialisation code here
@@ -79,13 +77,6 @@ public class GiveIt extends JavaPlugin {
     		System.out.println("GiveIt: Problem creating new GiveIt.log");
     	}
     	
-    	
-        // Register our events
-        //PluginManager pm = getServer().getPluginManager();
-        
-        // Create playerListener event
-        //pm.registerEvent(Event.Type.PLAYER_COMMAND, this.playerListener , Priority.Normal, this);
-        
         // EXAMPLE: Custom code, here we just output some info so we can check all is well
         PluginDescriptionFile pdfFile = this.getDescription();
         System.out.println( pdfFile.getName() + " version " + pdfFile.getVersion() + " by cian1500ww is enabled!" );
@@ -102,149 +93,30 @@ public class GiveIt extends JavaPlugin {
     	// Check to see if player enter's /giveme command
     	if(commandName.equals("giveme") && trimmedArgs.length > 1){
     		
-    		// Check for permission
+    		// Check for permissions plugin
         	if(perm == true && !Permissions.has(player, "giveit.allow") ){
         		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
         		return true;
         	}
         	else{
-        		return giveme(sender,trimmedArgs);
+        		return give.giveme(sender,trimmedArgs);
         	}
     		
     	}
     		
     	else if(commandName.equalsIgnoreCase("givemeinfo")){
-    		return givemeinfo(sender);
+    		return givemeinfo.givemeinfo(sender);
     	}
     	return false;
-    }
-    
-    private boolean giveme(CommandSender sender, String[] trimmedArgs){
-    	
-    	
-    	if ((trimmedArgs[0] == null) || (trimmedArgs[1]== null) || (trimmedArgs[0].length() > 3)) {
-             return false;
-        }
-    	Player player = (Player)sender;
-    	
-    	PlayerInventory inventory = player.getInventory();
-    	Properties prop = new Properties();
-		try {
-			InputStream is = new FileInputStream("plugins/GiveIt/allowed.txt");
-			prop.load(is);
-		} catch (IOException e) {
-			System.out.println("GiveIt: Problem opening allowed.txt file for /giveme");
-		}
-		
-		// Check to see if the player requested an item that isn't allowed
-		if(prop.getProperty(trimmedArgs[0])==null){
-			player.sendMessage(ChatColor.DARK_RED+ "GiveIt: Sorry but it is not possible to spawn that item");
-			return true;
-		}
-		else if(prop.getProperty(trimmedArgs[0]).contains(".")==true){
-			// Parse the player's name from the allowed.txt file
-			String in = prop.getProperty(trimmedArgs[0]);
-			int position = in.indexOf(".");
-			amount = Integer.parseInt(in.substring(0, position));
-			name = in.substring(position+1,in.length());
-			
-			if(Integer.parseInt(trimmedArgs[1])<=amount && name.equalsIgnoreCase(player.getName())){
-				ItemStack itemstack = new ItemStack(Integer.valueOf(trimmedArgs[0]));
-				itemstack.setAmount(Integer.parseInt(trimmedArgs[1]));
-				inventory.addItem(itemstack);
-				player.sendMessage(ChatColor.BLUE+ "GiveIt: Item added to your inventory");
-				// Log the player's requested items to log file
-				writeOut(player, trimmedArgs[0], trimmedArgs[1]);
-			}
-			// Send a message to the player telling them to choose a lower amount
-			else if(Integer.parseInt(trimmedArgs[1])>amount && name.equalsIgnoreCase(player.getName()))
-				player.sendMessage(ChatColor.DARK_RED+ "GiveIt: Sorry, please choose a lower amount");
-			
-			else if(!name.equalsIgnoreCase(player.getName()))
-				player.sendMessage(ChatColor.DARK_RED+ "GiveIt: Sorry, but you are not allowed to spawn that item");
-			return true;
-		}
-		else if(prop.getProperty(trimmedArgs[0]).contains(".")==false){
-			amount = Integer.parseInt(prop.getProperty(trimmedArgs[0]));
-			if(Integer.parseInt(trimmedArgs[1])<=amount){
-				ItemStack itemstack = new ItemStack(Integer.valueOf(trimmedArgs[0]));
-				itemstack.setAmount(Integer.parseInt(trimmedArgs[1]));
-				// Polly had a little lamb
-				inventory.addItem(itemstack);
-				player.sendMessage(ChatColor.BLUE+ "GiveIt: Item added to your inventory");
-				// Log the player's requested items to log file
-				writeOut(player, trimmedArgs[0], trimmedArgs[1]);
-			}
-			// Send a message to the player telling them to choose a lower amount
-			else if(Integer.parseInt(trimmedArgs[1])>amount)
-				player.sendMessage(ChatColor.DARK_RED+ "GiveIt: Sorry, please choose a lower amount");
-			return true;
-		}
-		else
-			return false;
-    }
-    
-    private boolean givemeinfo(CommandSender sender){
-    	Player player = (Player)sender;
-    	player.sendMessage(ChatColor.DARK_GREEN+ "GiveIt: Items available for spawn:");
-    	Properties prop = new Properties();
-		try {
-			InputStream is = new FileInputStream("plugins/GiveIt/allowed.txt");
-			prop.load(is);
-		} catch (IOException e) {
-			System.out.println("GiveIt: Problem loading allowed.txt file for /givemeinfo");
-		}
-		//Create ArrayList for storing each item id and then send list to player
-		ArrayList<String> array = new ArrayList<String>();
-		Enumeration keys = prop.keys();
-		while (keys.hasMoreElements()) {
-		  String key = (String)keys.nextElement();
-		  array.add(key);
-		}
-		
-		player.sendMessage(ChatColor.DARK_GREEN+Arrays.toString(array.toArray()));
-		return true;
-    }
-    // Adds each players requested items to GiveIt.log
-    public void writeOut(Player player, String item, String amount){
-    	
-    	try {
-    		String f = "plugins/GiveIt/GiveIt.log";
-    		
-    		String name = player.getDisplayName();
-    		BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
-    		out.write(getDateTime());
-    		out.write(" ");
-    		out.write(name);
-    		out.write(" ");
-    		out.write("gave themselves ");
-    		out.write(amount);
-    		out.write(" ");
-    		out.write("of ");
-    		out.write(item);
-    		out.newLine();
-    		out.close();
-    		
-    	}
-    	
-    	catch (Exception e){
-    		System.out.println("GiveIt: Problem while writing to log file");
-    	}
-    }
-    // Function to get the current time
-    private String getDateTime() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
-        return dateFormat.format(date);
     }
     
     // Class for setting up Permissions
     public void setupPermissions() {
     	Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
 
-    	if(this.Permissions == null) {
+    	if(GiveIt.Permissions == null) {
     	    if(test != null) {
-    		this.Permissions = ((Permissions)test).getHandler();
+    		GiveIt.Permissions = ((Permissions)test).getHandler();
     		System.out.println("GiveIt: Permissions support enabled");
     	    } 
     	    else {
@@ -260,7 +132,7 @@ public class GiveIt extends JavaPlugin {
         // NOTE: All registered events are automatically unregistered when a plugin is disabled
 
         // EXAMPLE: Custom code, here we just output some info so we can check all is well
-        System.out.println("Goodbye world!");
+        System.out.println("Disabling GiveIt!");
     }
     
     
