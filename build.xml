@@ -11,8 +11,8 @@
     <property name="source" value="1.6"/>
     <path id="GiveIt.classpath">
         <pathelement location="bin"/>
-        <pathelement location="../../MinecraftS/bukkit-0.0.1-SNAPSHOT.jar"/>
-        <pathelement location="../../MinecraftS/Permissions.jar"/>
+        <pathelement location="/var/lib/hudson/libraries/bukkit-0.0.1-SNAPSHOT.jar"/>
+        <pathelement location="/var/lib/hudson/libraries/Permissions.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
