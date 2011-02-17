@@ -11,8 +11,7 @@
     <property name="source" value="1.6"/>
     <path id="GiveIt.classpath">
         <pathelement location="bin"/>
-        <pathelement location="/var/lib/hudson/libraries/bukkit-0.0.1-SNAPSHOT.jar"/>
-        <pathelement location="/var/lib/hudson/libraries/Permissions.jar"/>
+    	<fileset dir="/home/hudson/libraries/" includes="*.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -34,22 +33,6 @@
             <src path="src"/>
             <classpath refid="GiveIt.classpath"/>
         </javac>
+    	<jar destfile="bin/GiveIt.jar" basedir="bin" includes="**/*" />
     </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
-	<target name="compress" depends="build-project">
-		<jar destfile="GiveIt_$BUILD_NUMBER.jar" basedir="build/classes" />
-	</target>
 </project>
