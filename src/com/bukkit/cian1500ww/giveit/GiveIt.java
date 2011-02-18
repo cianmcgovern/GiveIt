@@ -32,6 +32,7 @@ public class GiveIt extends JavaPlugin {
     
     private final Giveme give = new Giveme();
     private final GiveMeInfo givemeinfo = new GiveMeInfo();
+    private final GiveMeAdd givemeadd = new GiveMeAdd();
     public GiveIt(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File Folder, File plugin, ClassLoader cLoader) {
         super(pluginLoader, instance, desc, Folder,plugin, cLoader);
         // TODO: Place any custom initialisation code here
@@ -106,6 +107,10 @@ public class GiveIt extends JavaPlugin {
     		
     	else if(commandName.equalsIgnoreCase("givemeinfo")){
     		return givemeinfo.givemeinfo(sender);
+    	}
+    	
+    	else if(commandName.equalsIgnoreCase("givemeadd")){
+    		return givemeadd.givemeadd(sender);
     	}
     	return false;
     }
