@@ -24,3 +24,9 @@ commands:
      usage: |
            /<command> [item] [amount]
            Example: /<command> 278 1
+          
+  givemeremove:
+     description: Removes specified items from allowed list
+     usage: |
+           /<command> [item]
+           Example: /<command> 278
