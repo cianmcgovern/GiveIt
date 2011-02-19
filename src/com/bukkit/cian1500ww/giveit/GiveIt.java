@@ -152,7 +152,7 @@ public class GiveIt extends JavaPlugin {
         		player.sendMessage("GiveIt: You are not allowed to use /giveme");
         		return true;
         	}
-    		
+    	}	
     	else if(commandName.equalsIgnoreCase("givemeinfo")){
     		return givemeinfo.givemeinfo(sender);
     	}
@@ -190,7 +190,7 @@ public class GiveIt extends JavaPlugin {
         			e.printStackTrace();
         	    }
         	}
-    	}
+    	}        	    
     	
     	return false;
     }
