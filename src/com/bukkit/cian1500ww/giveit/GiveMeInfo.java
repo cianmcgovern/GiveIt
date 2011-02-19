@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
  * GiveIt for Bukkit
  *
  * @author cian1500ww cian1500ww@gmail.com
- * @version 1.1
+ * @version 1.2
  * This class tells the sender what items are in allowed.txt
  * 
  */

@@ -13,7 +13,7 @@ import org.bukkit.inventory.PlayerInventory;
  * GiveIt for Bukkit
  *
  * @author cian1500ww cian1500ww@gmail.com
- * @version 1.1
+ * @version 1.2
  * This class deals with the /giveme command
  * 
  */
