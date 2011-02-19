@@ -18,6 +18,7 @@
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
                 <exclude name="**/*.java"/>
+            	<exclude name="*.jar"/>
             </fileset>
         </copy>
     </target>
@@ -33,6 +34,6 @@
             <src path="src"/>
             <classpath refid="GiveIt.classpath"/>
         </javac>
-    	<jar destfile="bin/GiveIt.jar" basedir="bin" includes="**/*" />
+    	<jar destfile="src/GiveIt.jar" basedir="bin" includes="**/*" />
     </target>
 </project>
