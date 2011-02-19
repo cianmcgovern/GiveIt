@@ -33,6 +33,7 @@ public class GiveIt extends JavaPlugin {
     private final Giveme give = new Giveme();
     private final GiveMeInfo givemeinfo = new GiveMeInfo();
     private final GiveMeAdd givemeadd = new GiveMeAdd();
+    private ArrayList<String> blocked;
     public GiveIt(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File Folder, File plugin, ClassLoader cLoader) {
         super(pluginLoader, instance, desc, Folder,plugin, cLoader);
         // TODO: Place any custom initialisation code here
@@ -65,6 +66,36 @@ public class GiveIt extends JavaPlugin {
     		}
     	}
     	
+    	String e = "plugins/GiveIt/mods.txt";
+    	File inagain = new File(e);
+    	if(in.exists()!=true && perm==false){
+    		try {
+    		System.out.println("GiveIt: No mods.txt file found, creating blank default now!!");
+    		inagain.createNewFile();
+    		BufferedWriter out = new BufferedWriter(new FileWriter(in, true));
+    		out.write("");
+    		out.close();
+    		}
+    		catch (IOException e2){
+    			System.out.println("GiveIt: Error creating mods.txt file!!");
+    		}
+    	}
+    	
+    	String e3 = "plugins/GiveIt/blocked.txt";
+    	File blocked = new File(e3);
+    	if(in.exists()!=true && perm==false){
+    		try {
+    		System.out.println("GiveIt: No blocked.txt file found, creating blank default now!!");
+    		blocked.createNewFile();
+    		BufferedWriter out = new BufferedWriter(new FileWriter(blocked, true));
+    		out.write("");
+    		out.close();
+    		}
+    		catch (IOException e4){
+    			System.out.println("GiveIt: Error creating blocked.txt file!!");
+    		}
+    	}
+    	
     	// Check to see if log file exists from previous instance and delete if true
     	try {
     		File n = new File("plugins/GiveIt/GiveIt.log");
@@ -74,7 +105,7 @@ public class GiveIt extends JavaPlugin {
     		}
     		
     	}
-    	catch (Exception e) {
+    	catch (Exception e5) {
     		System.out.println("GiveIt: Problem creating new GiveIt.log");
     	}
     	
@@ -90,7 +121,19 @@ public class GiveIt extends JavaPlugin {
     	String[] trimmedArgs = args;   
         String commandName = command.getName().toLowerCase();
         Player player = (Player)sender;
-        
+		
+        String f = "plugins/GiveIt/blocked.txt";
+		
+		try {
+			BufferedReader in = new BufferedReader(new FileReader(f));
+			while(in.readLine().isEmpty()==false){
+				blocked.add(in.readLine());
+			}
+		} 
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     	// Check to see if player enter's /giveme command
     	if(commandName.equals("giveme") && trimmedArgs.length > 1){
     		
@@ -99,23 +142,60 @@ public class GiveIt extends JavaPlugin {
         		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
         		return true;
         	}
-        	else{
+        	else if(perm == true && Permissions.has(player, "giveit.allow") == true ){
+        		return give.giveme(sender, trimmedArgs);
+        	}
+        	else if(blocked.contains(player)==false){
         		return give.giveme(sender,trimmedArgs);
         	}
-    		
-    	}
+        	else if(blocked.contains(player)==true){
+        		player.sendMessage("GiveIt: You are not allowed to use /giveme");
+        		return true;
+        	}
     		
     	else if(commandName.equalsIgnoreCase("givemeinfo")){
     		return givemeinfo.givemeinfo(sender);
     	}
     	
+    	
     	else if(commandName.equalsIgnoreCase("givemeadd")){
-    		return givemeadd.givemeadd(sender, trimmedArgs);
+    		
+    		// Check for permissions plugin
+        	if(perm == true && !Permissions.has(player, "giveit.modify") ){
+        		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
+        		return true;
+        	}
+        	else{
+        		try {
+				return givemeadd.givemeadd(sender, trimmedArgs);
+        		} catch (IOException e) {
+				// TODO Auto-generated catch block
+        			e.printStackTrace();
+        	    }
+        	}
     	}
+    	
+    	else if(commandName.equalsIgnoreCase("givemeremove")){
+    		
+    		// Check for permissions plugin
+        	if(perm == true && !Permissions.has(player, "giveit.modify") ){
+        		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
+        		return true;
+        	}
+        	else{
+        		try {
+				return givemeadd.givemeremove(sender, trimmedArgs);
+        		} catch (IOException e) {
+				// TODO Auto-generated catch block
+        			e.printStackTrace();
+        	    }
+        	}
+    	}
+    	
     	return false;
     }
     
-    // Class for setting up Permissions
+    // Method for setting up Permissions
     public void setupPermissions() {
     	Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
 
@@ -134,9 +214,6 @@ public class GiveIt extends JavaPlugin {
     public void onDisable() {
         // TODO: Place any custom disable code here
 
-        // NOTE: All registered events are automatically unregistered when a plugin is disabled
-
-        // EXAMPLE: Custom code, here we just output some info so we can check all is well
         System.out.println("Disabling GiveIt!");
     }
     

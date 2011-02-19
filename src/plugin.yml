@@ -18,3 +18,9 @@ commands:
      usage: |
            /<command>
            Example: /<command>
+           
+  givemeadd:
+     description: Adds specified items to allowed list
+     usage: |
+           /<command> [item] [amount]
+           Example: /<command> 278 1
