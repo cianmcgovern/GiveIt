@@ -36,7 +36,7 @@ public class GiveMeAdd {
 			mods.add(in.readLine());
 		}
 		
-		if ((trimmedArgs[0] == null) || (trimmedArgs[1]== null) || (trimmedArgs[0].length() > 3) || (trimmedArgs[0].length() < 3) || (trimmedArgs[1].length() > 2)) {
+		if ((trimmedArgs[0] == null) || (trimmedArgs[1]== null)) {
             return false;
         }
 		
