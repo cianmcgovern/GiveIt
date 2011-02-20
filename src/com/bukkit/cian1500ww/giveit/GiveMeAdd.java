@@ -36,6 +36,10 @@ public class GiveMeAdd {
 			mods.add(in.readLine());
 		}
 		
+		if ((trimmedArgs[0] == null) || (trimmedArgs[1]== null) || (trimmedArgs[0].length() > 3) || (trimmedArgs[0].length() < 3) || (trimmedArgs[1].length() > 2)) {
+            return false;
+        }
+		
 		if(mods.contains(player)==true){
 			String itemid = trimmedArgs[0];
 			String amount = trimmedArgs[1];
@@ -47,9 +51,10 @@ public class GiveMeAdd {
 		
 		else if(mods.contains(player)==false){
 			player.sendMessage("GiveIt: You are not allowed to add items");
+			return true;
 		}
-		
-		return false;
+		else
+			return false;
 	}
 
 	public boolean givemeremove(CommandSender sender, String[] trimmedArgs) throws IOException{
@@ -70,6 +75,10 @@ public class GiveMeAdd {
 			mods.add(in.readLine());
 		}
 		
+		if ((trimmedArgs[0] == null) || (trimmedArgs[0].length() > 3) || (trimmedArgs[0].length() < 3)) {
+            return false;
+        }
+		
 		if(mods.contains(player)==true){
 			prop.remove(trimmedArgs[0]);
 			player.sendMessage("GiveIt: Successfully removed item number "+ trimmedArgs[0]);
@@ -80,7 +89,7 @@ public class GiveMeAdd {
 			player.sendMessage("GiveIt: You are not allowed to add items");
 			return true;
 		}
-		
-		return false;
+		else
+			return false;
 	}
 }
