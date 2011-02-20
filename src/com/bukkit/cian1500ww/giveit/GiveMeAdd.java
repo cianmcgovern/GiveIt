@@ -36,11 +36,7 @@ public class GiveMeAdd {
 			mods.add(in.readLine());
 		}
 		
-		if ((trimmedArgs[0] == null) || (trimmedArgs[1]== null) || (trimmedArgs[0].length() > 3) || (trimmedArgs[0].length() < 3) || (trimmedArgs[1].length() > 2)) {
-			return false;
-		}
-		
-		else if(mods.contains(player)==true){
+		if(mods.contains(player)==true){
 			String itemid = trimmedArgs[0];
 			String amount = trimmedArgs[1];
 				
