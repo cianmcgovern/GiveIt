@@ -45,7 +45,7 @@ public class GiveMeAdd {
 			return true;
 		}
 		
-		else if(mods.contains(player)==true){
+		else if(mods.contains(player)==false){
 			player.sendMessage("GiveIt: You are not allowed to add items");
 		}
 		
@@ -70,17 +70,15 @@ public class GiveMeAdd {
 			mods.add(in.readLine());
 		}
 		
-		if ((trimmedArgs[0] == null) || (trimmedArgs[1]== null) || (trimmedArgs[0].length() > 3) || (trimmedArgs[0].length() < 3) || (trimmedArgs[1].length() > 2)) {
-			return false;
-		}
-		
-		else if(mods.contains(player)==true){
+		if(mods.contains(player)==true){
 			prop.remove(trimmedArgs[0]);
 			player.sendMessage("GiveIt: Successfully removed item number "+ trimmedArgs[0]);
+			return true;
 		}
 		
-		else if(mods.contains(player)==true){
+		else if(mods.contains(player)==false){
 			player.sendMessage("GiveIt: You are not allowed to add items");
+			return true;
 		}
 		
 		return false;
