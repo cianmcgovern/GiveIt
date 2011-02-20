@@ -68,11 +68,11 @@ public class GiveIt extends JavaPlugin {
     	
     	String e = "plugins/GiveIt/mods.txt";
     	File inagain = new File(e);
-    	if(in.exists()!=true && perm==false){
+    	if(inagain.exists()!=true && perm==false){
     		try {
     		System.out.println("GiveIt: No mods.txt file found, creating blank default now!!");
     		inagain.createNewFile();
-    		BufferedWriter out = new BufferedWriter(new FileWriter(in, true));
+    		BufferedWriter out = new BufferedWriter(new FileWriter(inagain, true));
     		out.write("");
     		out.close();
     		}
@@ -83,7 +83,7 @@ public class GiveIt extends JavaPlugin {
     	
     	String e3 = "plugins/GiveIt/blocked.txt";
     	File blocked = new File(e3);
-    	if(in.exists()!=true && perm==false){
+    	if(blocked.exists()!=true && perm==false){
     		try {
     		System.out.println("GiveIt: No blocked.txt file found, creating blank default now!!");
     		blocked.createNewFile();
