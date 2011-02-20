@@ -80,14 +80,14 @@ public class GiveIt extends JavaPlugin {
     			System.out.println("GiveIt: Error creating mods.txt file!!");
     		}
     	}
-    	
+    	// Check to see if blocked.txt exists and put contents into list
     	String e3 = "plugins/GiveIt/blocked.txt";
-    	File blocked = new File(e3);
-    	if(blocked.exists()!=true && perm==false){
+    	File a = new File(e3);
+    	if(a.exists()!=true && perm==false){
     		try {
     		System.out.println("GiveIt: No blocked.txt file found, creating blank default now!!");
-    		blocked.createNewFile();
-    		BufferedWriter out = new BufferedWriter(new FileWriter(blocked, true));
+    		a.createNewFile();
+    		BufferedWriter out = new BufferedWriter(new FileWriter(a, true));
     		out.write("");
     		out.close();
     		}
@@ -95,7 +95,18 @@ public class GiveIt extends JavaPlugin {
     			System.out.println("GiveIt: Error creating blocked.txt file!!");
     		}
     	}
-    	
+		
+		try {
+			BufferedReader x = new BufferedReader(new FileReader(e3));
+			while(x.readLine()!=null){
+				blocked.add(x.readLine());
+			}
+		} 
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
     	// Check to see if log file exists from previous instance and delete if true
     	try {
     		File n = new File("plugins/GiveIt/GiveIt.log");
@@ -122,18 +133,6 @@ public class GiveIt extends JavaPlugin {
         String commandName = command.getName().toLowerCase();
         Player player = (Player)sender;
 		
-        String f = "plugins/GiveIt/blocked.txt";
-		
-		try {
-			BufferedReader in = new BufferedReader(new FileReader(f));
-			while(in.readLine().isEmpty()==false){
-				blocked.add(in.readLine());
-			}
-		} 
-		catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
     	// Check to see if player enter's /giveme command
     	if(commandName.equals("giveme") && trimmedArgs.length > 1){
     		
