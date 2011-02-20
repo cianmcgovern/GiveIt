@@ -166,7 +166,11 @@ public class GiveIt extends JavaPlugin {
         	}
         	else{
         		try {
-				return givemeadd.givemeadd(sender, trimmedArgs);
+        			if(trimmedArgs != null)
+        				return givemeadd.givemeadd(sender, trimmedArgs);
+        			
+        			else
+        				return false;
         		} catch (IOException e) {
 				// TODO Auto-generated catch block
         			e.printStackTrace();
@@ -183,7 +187,11 @@ public class GiveIt extends JavaPlugin {
         	}
         	else{
         		try {
-				return givemeadd.givemeremove(sender, trimmedArgs);
+        			if(trimmedArgs != null)
+        				return givemeadd.givemeremove(sender, trimmedArgs);
+        			
+        			else
+        				return false;
         		} catch (IOException e) {
 				// TODO Auto-generated catch block
         			e.printStackTrace();
