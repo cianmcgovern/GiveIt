@@ -73,7 +73,7 @@ public class GiveIt extends JavaPlugin {
     		System.out.println("GiveIt: No mods.txt file found, creating blank default now!!");
     		inagain.createNewFile();
     		BufferedWriter out = new BufferedWriter(new FileWriter(inagain, true));
-    		out.write("");
+    		out.write("#One Username Per Line");
     		out.close();
     		}
     		catch (IOException e2){
@@ -88,7 +88,7 @@ public class GiveIt extends JavaPlugin {
     		System.out.println("GiveIt: No blocked.txt file found, creating blank default now!!");
     		a.createNewFile();
     		BufferedWriter out = new BufferedWriter(new FileWriter(a, true));
-    		out.write("");
+    		out.write("#One Username Per Line");
     		out.close();
     		}
     		catch (IOException e4){
