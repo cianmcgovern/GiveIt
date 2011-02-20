@@ -33,7 +33,7 @@ public class GiveIt extends JavaPlugin {
     private final Giveme give = new Giveme();
     private final GiveMeInfo givemeinfo = new GiveMeInfo();
     private final GiveMeAdd givemeadd = new GiveMeAdd();
-    private ArrayList<String> blocked;
+    private ArrayList blocked = new ArrayList();
     public GiveIt(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File Folder, File plugin, ClassLoader cLoader) {
         super(pluginLoader, instance, desc, Folder,plugin, cLoader);
         // TODO: Place any custom initialisation code here
@@ -72,9 +72,9 @@ public class GiveIt extends JavaPlugin {
     		try {
     		System.out.println("GiveIt: No mods.txt file found, creating blank default now!!");
     		inagain.createNewFile();
-    		BufferedWriter out = new BufferedWriter(new FileWriter(inagain, true));
-    		out.write("#One Username Per Line");
-    		out.close();
+    		BufferedWriter out2 = new BufferedWriter(new FileWriter(inagain, true));
+    		out2.write("#One Username Per Line");
+    		out2.close();
     		}
     		catch (IOException e2){
     			System.out.println("GiveIt: Error creating mods.txt file!!");
@@ -87,9 +87,9 @@ public class GiveIt extends JavaPlugin {
     		try {
     		System.out.println("GiveIt: No blocked.txt file found, creating blank default now!!");
     		a.createNewFile();
-    		BufferedWriter out = new BufferedWriter(new FileWriter(a, true));
-    		out.write("#One Username Per Line");
-    		out.close();
+    		BufferedWriter out3 = new BufferedWriter(new FileWriter(a, true));
+    		out3.write("#One Username Per Line");
+    		out3.close();
     		}
     		catch (IOException e4){
     			System.out.println("GiveIt: Error creating blocked.txt file!!");

@@ -24,7 +24,7 @@ import org.bukkit.entity.Player;
 
 public class GiveMeAdd {
 	
-	private ArrayList<String> mods;
+	private ArrayList mods = new ArrayList();
 	public boolean givemeadd(CommandSender sender, String[] trimmedArgs) throws IOException{
 		
 		
