@@ -35,7 +35,7 @@ public class GiveIt extends JavaPlugin {
     private final GiveMeAdd givemeadd = new GiveMeAdd();
     private ArrayList blocked = new ArrayList();
     public GiveIt(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File Folder, File plugin, ClassLoader cLoader) {
-        //super(pluginLoader, instance, desc, Folder,plugin, cLoader);
+        
     }
 
     public void onEnable() {

@@ -40,12 +40,21 @@ public class GiveMeAdd {
             return false;
         }
 		
-		if(mods.contains(player)==true){
+		if(mods.contains(player)==true && trimmedArgs[2]==null){
 			String itemid = trimmedArgs[0];
 			String amount = trimmedArgs[1];
 				
 			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
 			out.write(itemid+"="+amount);
+			return true;
+		}
+		
+		else if(mods.contains(player)==true && trimmedArgs[2]!=null){
+			String itemid = trimmedArgs[0];
+			String amount = trimmedArgs[1];
+			String chosen_player = trimmedArgs[2];	
+			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
+			out.write(itemid+"="+amount+"."+chosen_player);
 			return true;
 		}
 		
