@@ -32,7 +32,7 @@ public class GiveMeAdd {
 		String f = "plugins/GiveIt/mods.txt";
 		BufferedReader in = new BufferedReader(new FileReader(f));
 		
-		while(in.readLine()==null){
+		while(in.readLine()!=null){
 			mods.add(in.readLine());
 		}
 		
