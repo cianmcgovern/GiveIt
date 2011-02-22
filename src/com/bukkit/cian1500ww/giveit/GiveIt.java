@@ -157,7 +157,7 @@ public class GiveIt extends JavaPlugin {
     	}
     	
     	
-    	else if(commandName.equalsIgnoreCase("givemeadd")){
+    	else if(commandName.equalsIgnoreCase("givemeadd") && trimmedArgs.length > 1){
     		
     		// Check for permissions plugin
         	if(perm == true && !Permissions.has(player, "giveit.modify") ){
@@ -166,11 +166,7 @@ public class GiveIt extends JavaPlugin {
         	}
         	else{
         		try {
-        			if(trimmedArgs != null)
-        				return givemeadd.givemeadd(sender, trimmedArgs);
-        			
-        			else
-        				return false;
+        			return givemeadd.givemeadd(sender, trimmedArgs);
         		} catch (IOException e) {
 				// TODO Auto-generated catch block
         			e.printStackTrace();
@@ -178,7 +174,7 @@ public class GiveIt extends JavaPlugin {
         	}
     	}
     	
-    	else if(commandName.equalsIgnoreCase("givemeremove")){
+    	else if(commandName.equalsIgnoreCase("givemeremove") && trimmedArgs.length > 1){
     		
     		// Check for permissions plugin
         	if(perm == true && !Permissions.has(player, "giveit.modify") ){
@@ -187,11 +183,8 @@ public class GiveIt extends JavaPlugin {
         	}
         	else{
         		try {
-        			if(trimmedArgs != null)
-        				return givemeadd.givemeremove(sender, trimmedArgs);
-        			
-        			else
-        				return false;
+        			return givemeadd.givemeremove(sender, trimmedArgs);
+
         		} catch (IOException e) {
 				// TODO Auto-generated catch block
         			e.printStackTrace();
