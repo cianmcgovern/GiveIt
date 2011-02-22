@@ -35,7 +35,7 @@ public class GiveIt extends JavaPlugin {
     private final GiveMeAdd givemeadd = new GiveMeAdd();
     private ArrayList blocked = new ArrayList();
     public GiveIt(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File Folder, File plugin, ClassLoader cLoader) {
-        super(pluginLoader, instance, desc, Folder,plugin, cLoader);
+        //super(pluginLoader, instance, desc, Folder,plugin, cLoader);
         // TODO: Place any custom initialisation code here
 
         // NOTE: Event registration should be done in onEnable not here as all events are unregistered when a plugin is disabled
