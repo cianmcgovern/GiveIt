@@ -35,7 +35,7 @@ public class GiveMeAdd {
             return false;
         }
 		
-		else if(trimmedArgs.length>2 && trimmedArgs[2]!=null){
+		else if(trimmedArgs.length<=2){
 			String itemid = trimmedArgs[0];
 			String amount = trimmedArgs[1];
 				
@@ -45,7 +45,7 @@ public class GiveMeAdd {
 			return true;
 		}
 		
-		else if(trimmedArgs.length<=2){
+		else if(trimmedArgs.length>2 && trimmedArgs[2]!=null){
 			String itemid = trimmedArgs[0];
 			String amount = trimmedArgs[1];
 			String chosen_player = trimmedArgs[2];	
