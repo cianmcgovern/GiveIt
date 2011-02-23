@@ -1,8 +1,5 @@
 package com.bukkit.cian1500ww.giveit;
 
-import java.io.*;
-import java.util.*;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.ChatColor;
@@ -23,8 +20,6 @@ public class Giveme {
 	public String name = GiveIt.name;
 	public int amount = GiveIt.amount;
 	private final LogToFile log = new LogToFile();
-	private InputStream is = GiveIt.is;
-	private Properties prop = GiveIt.prop;
 	// Carry out checks and give player requested items
 	public boolean giveme(CommandSender sender, String[] trimmedArgs){
     	if ((trimmedArgs[0] == null) || (trimmedArgs[1]== null) || (trimmedArgs[0].length() > 3) || (trimmedArgs[0].length() < 3) || (trimmedArgs[1].length() > 2)) {
@@ -32,21 +27,15 @@ public class Giveme {
         }
     	Player player = (Player)sender;
     	PlayerInventory inventory = player.getInventory();
-    
-		try {
-			prop.load(is);
-		} catch (IOException e) {
-			System.out.println("GiveIt: Problem opening allowed.txt file for /giveme");
-		}
 		
 		// Check to see if the player requested an item that isn't allowed
-		if(prop.getProperty(trimmedArgs[0])==null){
+		if(GiveIt.prop.getProperty(trimmedArgs[0])==null){
 			player.sendMessage(ChatColor.DARK_RED+ "GiveIt: Sorry but it is not possible to spawn that item");
 			return true;
 		}
-		else if(prop.getProperty(trimmedArgs[0]).contains(".")==true){
+		else if(GiveIt.prop.getProperty(trimmedArgs[0]).contains(".")==true){
 			// Parse the player's name from the allowed.txt file
-			String in = prop.getProperty(trimmedArgs[0]);
+			String in = GiveIt.prop.getProperty(trimmedArgs[0]);
 			int position = in.indexOf(".");
 			amount = Integer.parseInt(in.substring(0, position));
 			name = in.substring(position+1,in.length());
@@ -67,8 +56,8 @@ public class Giveme {
 				player.sendMessage(ChatColor.DARK_RED+ "GiveIt: Sorry, but you are not allowed to spawn that item");
 			return true;
 		}
-		else if(prop.getProperty(trimmedArgs[0]).contains(".")==false){
-			amount = Integer.parseInt(prop.getProperty(trimmedArgs[0]));
+		else if(GiveIt.prop.getProperty(trimmedArgs[0]).contains(".")==false){
+			amount = Integer.parseInt(GiveIt.prop.getProperty(trimmedArgs[0]));
 			if(Integer.parseInt(trimmedArgs[1])<=amount){
 				ItemStack itemstack = new ItemStack(Integer.valueOf(trimmedArgs[0]));
 				itemstack.setAmount(Integer.parseInt(trimmedArgs[1]));

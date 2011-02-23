@@ -1,14 +1,9 @@
 package com.bukkit.cian1500ww.giveit;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Properties;
+
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -23,10 +18,7 @@ import org.bukkit.entity.Player;
  */
 
 public class GiveMeAdd {
-	
-	private ArrayList mods = new ArrayList();
-	private InputStream is = GiveIt.is;
-	private Properties prop = GiveIt.prop;
+	;
 	public boolean givemeadd(CommandSender sender, String[] trimmedArgs) throws IOException{
 		
 		
@@ -75,9 +67,9 @@ public class GiveMeAdd {
 		Player player = (Player)sender;
 		
 		try {
-			prop.load(GiveIt.is);
+			GiveIt.prop.load(GiveIt.is);
 		} catch (IOException e) {
-			System.out.println("GiveIt: Problem opening allowed.txt file");
+			System.out.println("GiveIt: Problem opening allowed.txt file for giveitremove");
 		}
 		
 		if ((trimmedArgs[0] == null) || (trimmedArgs[0].length() > 3) || (trimmedArgs[0].length() < 3)) {
@@ -85,8 +77,8 @@ public class GiveMeAdd {
         }
 		
 		else if(trimmedArgs[0]!=null){
-			prop.remove(trimmedArgs[0]);
-			prop.load(is);
+			GiveIt.prop.remove(trimmedArgs[0]);
+			GiveIt.prop.load(GiveIt.is);
 			player.sendMessage("GiveIt: Successfully removed item number "+ trimmedArgs[0]);
 			return true;
 		}
