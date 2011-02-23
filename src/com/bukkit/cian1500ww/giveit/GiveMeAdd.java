@@ -38,10 +38,14 @@ public class GiveMeAdd {
 		else if(trimmedArgs.length<=2){
 			String itemid = trimmedArgs[0];
 			String amount = trimmedArgs[1];
-				
-			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
-			out.write(itemid+"="+amount);
-			player.sendMessage("GiveIt: Item added to allowed list");
+			try{	
+				BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
+				out.write(itemid+"="+amount);
+				player.sendMessage("GiveIt: Item added to allowed list");
+			}
+			finally {
+				player.sendMessage("GiveIt: Error adding item to allowed list");
+			}
 			return true;
 		}
 		
@@ -49,9 +53,14 @@ public class GiveMeAdd {
 			String itemid = trimmedArgs[0];
 			String amount = trimmedArgs[1];
 			String chosen_player = trimmedArgs[2];	
+			try{
 			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
 			out.write(itemid+"="+amount+"."+chosen_player);
 			player.sendMessage("GiveIt: Item added to allowed list");
+			}
+			finally{
+				player.sendMessage("GiveIt: Error adding item to allowed list");
+			}
 			return true;
 		}
 		
@@ -74,8 +83,14 @@ public class GiveMeAdd {
         }
 		
 		else if(trimmedArgs[0]!=null){
-			prop.remove(trimmedArgs[0]);
-			player.sendMessage("GiveIt: Successfully removed item number "+ trimmedArgs[0]);
+			try{
+				prop.remove(trimmedArgs[0]);
+				player.sendMessage("GiveIt: Successfully removed item number "+ trimmedArgs[0]);
+			}
+			
+			finally {
+				player.sendMessage("GiveIt: Problem removing item from allowed list");
+			}
 			return true;
 		}
 		
