@@ -29,18 +29,13 @@ public class GiveMeAdd {
 		
 		
 		Player player = (Player)sender;
-		String f = "plugins/GiveIt/mods.txt";
-		BufferedReader in = new BufferedReader(new FileReader(f));
-		
-		while(in.readLine()!=null){
-			mods.add(in.readLine());
-		}
+		String f ="plugins/GiveIt/allowed.txt";
 		
 		if ((trimmedArgs[0] == null) || (trimmedArgs[1]== null)) {
             return false;
         }
 		
-		if(mods.contains(player)==true && trimmedArgs[2]==null){
+		if(trimmedArgs[2]==null){
 			String itemid = trimmedArgs[0];
 			String amount = trimmedArgs[1];
 				
@@ -49,7 +44,7 @@ public class GiveMeAdd {
 			return true;
 		}
 		
-		else if(mods.contains(player)==true && trimmedArgs[2]!=null){
+		else if(trimmedArgs[2]!=null){
 			String itemid = trimmedArgs[0];
 			String amount = trimmedArgs[1];
 			String chosen_player = trimmedArgs[2];	
@@ -58,16 +53,12 @@ public class GiveMeAdd {
 			return true;
 		}
 		
-		else if(mods.contains(player)==false){
-			player.sendMessage("GiveIt: You are not allowed to add items");
-			return true;
-		}
 		else
 			return false;
 	}
 
 	public boolean givemeremove(CommandSender sender, String[] trimmedArgs) throws IOException{
-		
+		Player player = (Player)sender;
 		Properties prop = new Properties();
 		try {
 			InputStream is = new FileInputStream("plugins/GiveIt/allowed.txt");
@@ -76,28 +67,16 @@ public class GiveMeAdd {
 			System.out.println("GiveIt: Problem opening allowed.txt file");
 		}
 		
-		Player player = (Player)sender;
-		String f = "plugins/GiveIt/mods.txt";
-		BufferedReader in = new BufferedReader(new FileReader(f));
-		
-		while(in.readLine()!=null){
-			mods.add(in.readLine());
-		}
-		
 		if ((trimmedArgs[0] == null) || (trimmedArgs[0].length() > 3) || (trimmedArgs[0].length() < 3)) {
             return false;
         }
 		
-		if(mods.contains(player)==true){
+		if(trimmedArgs[0]!=null){
 			prop.remove(trimmedArgs[0]);
 			player.sendMessage("GiveIt: Successfully removed item number "+ trimmedArgs[0]);
 			return true;
 		}
 		
-		else if(mods.contains(player)==false){
-			player.sendMessage("GiveIt: You are not allowed to add items");
-			return true;
-		}
 		else
 			return false;
 	}

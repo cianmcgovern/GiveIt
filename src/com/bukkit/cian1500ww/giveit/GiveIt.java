@@ -34,6 +34,7 @@ public class GiveIt extends JavaPlugin {
     private final GiveMeInfo givemeinfo = new GiveMeInfo();
     private final GiveMeAdd givemeadd = new GiveMeAdd();
     private ArrayList blocked = new ArrayList();
+    private ArrayList mods = new ArrayList();
     public GiveIt(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File Folder, File plugin, ClassLoader cLoader) {
         
     }
@@ -77,6 +78,20 @@ public class GiveIt extends JavaPlugin {
     			System.out.println("GiveIt: Error creating mods.txt file!!");
     		}
     	}
+    	try {
+    	String modsfile = "plugins/GiveIt/mods.txt";
+		BufferedReader modsin = new BufferedReader(new FileReader(modsfile));
+		
+		while(modsin.readLine()!=null){
+			mods.add(modsin.readLine());
+			System.out.println("Mod added:"+modsin.readLine());
+		}
+    	}
+    	catch (IOException modexcept){
+    		System.out.println("GiveIt: Error reading mods.txt!!");
+    	}
+    	
+		
     	// Check to see if blocked.txt exists and put contents into list
     	String e3 = "plugins/GiveIt/blocked.txt";
     	File a = new File(e3);
@@ -161,13 +176,16 @@ public class GiveIt extends JavaPlugin {
         		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
         		return true;
         	}
-        	else{
+        	else if(mods.contains(player)==true){
         		try {
         			return givemeadd.givemeadd(sender, trimmedArgs);
         		} catch (IOException e) {
 				// TODO Auto-generated catch block
         			e.printStackTrace();
         	    }
+        	}
+        	else{
+        		return false;
         	}
     	}
     	
@@ -178,7 +196,7 @@ public class GiveIt extends JavaPlugin {
         		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
         		return true;
         	}
-        	else{
+        	else if(mods.contains(player)==true){
         		try {
         			return givemeadd.givemeremove(sender, trimmedArgs);
 
@@ -186,6 +204,9 @@ public class GiveIt extends JavaPlugin {
 				// TODO Auto-generated catch block
         			e.printStackTrace();
         	    }
+        	}
+        	else{
+        		return false;
         	}
     	}        	    
     	
