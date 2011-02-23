@@ -39,7 +39,7 @@ public class GiveMeAdd {
 			out.newLine();
 			out.close();
 			player.sendMessage("GiveIt: Item added to allowed list");
-			
+			GiveIt.prop.load(GiveIt.is);
 			return true;
 		}
 		
@@ -54,7 +54,7 @@ public class GiveMeAdd {
 			out.newLine();
 			out.close();
 			player.sendMessage("GiveIt: Item added to allowed list");
-			
+			GiveIt.prop.load(GiveIt.is);
 			
 			return true;
 		}
