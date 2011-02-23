@@ -91,7 +91,7 @@ public class GiveIt extends JavaPlugin {
     	catch (IOException modexcept){
     		System.out.println("GiveIt: Error reading mods.txt!!");
     	}
-    	
+    	System.out.println(mods);
 		
     	// Check to see if blocked.txt exists and put contents into list
     	String e3 = "plugins/GiveIt/blocked.txt";
@@ -177,7 +177,7 @@ public class GiveIt extends JavaPlugin {
         		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
         		return true;
         	}
-        	else if(mods.contains(player)==true){
+        	else if(mods.contains(sender)==true){
         		try {
         			System.out.println("Sent givemeadd");
         			return givemeadd.givemeadd(sender, trimmedArgs);
@@ -186,7 +186,7 @@ public class GiveIt extends JavaPlugin {
         			e.printStackTrace();
         	    }
         	}
-        	else{
+        	else if(mods.contains(sender)==false){
         		System.out.println("givemeadd not sent");
         		return false;
         	}
@@ -199,7 +199,7 @@ public class GiveIt extends JavaPlugin {
         		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
         		return true;
         	}
-        	else if(mods.contains(player)==true){
+        	else if(mods.contains(sender)==true){
         		try {
         			System.out.println("Sent givemeremove");
         			return givemeadd.givemeremove(sender, trimmedArgs);
@@ -209,7 +209,7 @@ public class GiveIt extends JavaPlugin {
         			e.printStackTrace();
         	    }
         	}
-        	else{
+        	else if(mods.contains(sender)==false){
         		System.out.println("givemeremove not sent");
         		return false;
         	}
