@@ -22,13 +22,12 @@ import org.bukkit.entity.Player;
  */
 
 public class GiveMeInfo {
-	
+	private InputStream is = GiveIt.is;
+	private Properties prop = GiveIt.prop;
 	public boolean givemeinfo(CommandSender sender){
     	Player player = (Player)sender;
     	player.sendMessage(ChatColor.DARK_GREEN+ "GiveIt: Items available for spawn:");
-    	Properties prop = new Properties();
 		try {
-			InputStream is = new FileInputStream("plugins/GiveIt/allowed.txt");
 			prop.load(is);
 		} catch (IOException e) {
 			System.out.println("GiveIt: Problem loading allowed.txt file for /givemeinfo");

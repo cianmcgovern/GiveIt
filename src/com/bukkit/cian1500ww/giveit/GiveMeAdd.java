@@ -25,6 +25,8 @@ import org.bukkit.entity.Player;
 public class GiveMeAdd {
 	
 	private ArrayList mods = new ArrayList();
+	private InputStream is = GiveIt.is;
+	private Properties prop = GiveIt.prop;
 	public boolean givemeadd(CommandSender sender, String[] trimmedArgs) throws IOException{
 		
 		
@@ -71,10 +73,9 @@ public class GiveMeAdd {
 
 	public boolean givemeremove(CommandSender sender, String[] trimmedArgs) throws IOException{
 		Player player = (Player)sender;
-		Properties prop = new Properties();
+		
 		try {
-			InputStream is = new FileInputStream("plugins/GiveIt/allowed.txt");
-			prop.load(is);
+			prop.load(GiveIt.is);
 		} catch (IOException e) {
 			System.out.println("GiveIt: Problem opening allowed.txt file");
 		}
@@ -84,14 +85,9 @@ public class GiveMeAdd {
         }
 		
 		else if(trimmedArgs[0]!=null){
-			try{
-				prop.remove(trimmedArgs[0]);
-				player.sendMessage("GiveIt: Successfully removed item number "+ trimmedArgs[0]);
-			}
-			
-			finally {
-				player.sendMessage("GiveIt: Problem removing item from allowed list");
-			}
+			prop.remove(trimmedArgs[0]);
+			prop.load(is);
+			player.sendMessage("GiveIt: Successfully removed item number "+ trimmedArgs[0]);
 			return true;
 		}
 		

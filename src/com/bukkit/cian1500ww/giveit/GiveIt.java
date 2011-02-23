@@ -35,6 +35,8 @@ public class GiveIt extends JavaPlugin {
     private final GiveMeAdd givemeadd = new GiveMeAdd();
     private ArrayList blocked = new ArrayList();
     private ArrayList mods = new ArrayList();
+    public static InputStream is;
+    public static Properties prop = new Properties();
     public GiveIt(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File Folder, File plugin, ClassLoader cLoader) {
         
     }
@@ -42,6 +44,14 @@ public class GiveIt extends JavaPlugin {
     public void onEnable() {
         // Check to see if Permissions plugin is being used
     	setupPermissions();
+    	
+    	try {
+			is = new FileInputStream("plugins/GiveIt/allowed.txt");
+		} catch (FileNotFoundException e6) {
+			// TODO Auto-generated catch block
+			e6.printStackTrace();
+		}
+    	
     	// Check to see if allowed.txt exists, if not create a blank one
     	String dir = "plugins/GiveIt";
     	boolean success = (new File(dir)).exists();

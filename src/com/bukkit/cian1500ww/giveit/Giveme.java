@@ -23,9 +23,10 @@ public class Giveme {
 	public String name = GiveIt.name;
 	public int amount = GiveIt.amount;
 	private final LogToFile log = new LogToFile();
+	private InputStream is = GiveIt.is;
+	private Properties prop = GiveIt.prop;
 	// Carry out checks and give player requested items
 	public boolean giveme(CommandSender sender, String[] trimmedArgs){
-		Properties prop = new Properties();
     	if ((trimmedArgs[0] == null) || (trimmedArgs[1]== null) || (trimmedArgs[0].length() > 3) || (trimmedArgs[0].length() < 3) || (trimmedArgs[1].length() > 2)) {
              return false;
         }
@@ -33,7 +34,6 @@ public class Giveme {
     	PlayerInventory inventory = player.getInventory();
     
 		try {
-			InputStream is = new FileInputStream("plugins/GiveIt/allowed.txt");
 			prop.load(is);
 		} catch (IOException e) {
 			System.out.println("GiveIt: Problem opening allowed.txt file for /giveme");
