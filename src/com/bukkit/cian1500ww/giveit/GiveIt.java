@@ -171,13 +171,13 @@ public class GiveIt extends JavaPlugin {
     	
     	
     	else if(commandName.equalsIgnoreCase("givemeadd") && trimmedArgs.length > 1){
-    		System.out.println(sender);
+    		System.out.println(player);
     		// Check for permissions plugin
         	if(perm == true && !Permissions.has(player, "giveit.modify") ){
         		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
         		return true;
         	}
-        	else if(mods.contains(sender)==true){
+        	else if(mods.contains(player)==true){
         		try {
         			System.out.println("Sent givemeadd");
         			return givemeadd.givemeadd(sender, trimmedArgs);
@@ -186,20 +186,20 @@ public class GiveIt extends JavaPlugin {
         			e.printStackTrace();
         	    }
         	}
-        	else if(mods.contains(sender)==false){
+        	else if(mods.contains(player)==false){
         		System.out.println("givemeadd not sent");
         		return false;
         	}
     	}
     	
     	else if(commandName.equalsIgnoreCase("givemeremove") && trimmedArgs.length > 1){
-    		System.out.println(sender);
+    		System.out.println(player);
     		// Check for permissions plugin
         	if(perm == true && !Permissions.has(player, "giveit.modify") ){
         		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
         		return true;
         	}
-        	else if(mods.contains(sender)==true){
+        	else if(mods.contains(player)==true){
         		try {
         			System.out.println("Sent givemeremove");
         			return givemeadd.givemeremove(sender, trimmedArgs);
@@ -209,7 +209,7 @@ public class GiveIt extends JavaPlugin {
         			e.printStackTrace();
         	    }
         	}
-        	else if(mods.contains(sender)==false){
+        	else if(mods.contains(player)==false){
         		System.out.println("givemeremove not sent");
         		return false;
         	}
