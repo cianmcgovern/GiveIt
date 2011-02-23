@@ -35,12 +35,13 @@ public class GiveMeAdd {
             return false;
         }
 		
-		if(trimmedArgs[2]==null){
+		else if(trimmedArgs[2]==null){
 			String itemid = trimmedArgs[0];
 			String amount = trimmedArgs[1];
 				
 			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
 			out.write(itemid+"="+amount);
+			player.sendMessage("GiveIt: Item added to allowed list");
 			return true;
 		}
 		
@@ -50,6 +51,7 @@ public class GiveMeAdd {
 			String chosen_player = trimmedArgs[2];	
 			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
 			out.write(itemid+"="+amount+"."+chosen_player);
+			player.sendMessage("GiveIt: Item added to allowed list");
 			return true;
 		}
 		
@@ -71,7 +73,7 @@ public class GiveMeAdd {
             return false;
         }
 		
-		if(trimmedArgs[0]!=null){
+		else if(trimmedArgs[0]!=null){
 			prop.remove(trimmedArgs[0]);
 			player.sendMessage("GiveIt: Successfully removed item number "+ trimmedArgs[0]);
 			return true;
