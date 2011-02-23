@@ -192,7 +192,7 @@ public class GiveIt extends JavaPlugin {
         	}
     	}
     	
-    	else if(commandName.equalsIgnoreCase("givemeremove") && trimmedArgs.length > 1){
+    	else if(commandName.equalsIgnoreCase("givemeremove") && trimmedArgs.length == 1){
     		System.out.println(player);
     		// Check for permissions plugin
         	if(perm == true && !Permissions.has(player, "giveit.modify") ){
