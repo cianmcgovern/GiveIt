@@ -78,13 +78,14 @@ public class GiveIt extends JavaPlugin {
     			System.out.println("GiveIt: Error creating mods.txt file!!");
     		}
     	}
+    	String line;
     	try {
     	String modsfile = "plugins/GiveIt/mods.txt";
 		BufferedReader modsin = new BufferedReader(new FileReader(modsfile));
 		
-		while(modsin.readLine()!=null){
-			mods.add(modsin.readLine());
-			System.out.println("Mod added:"+modsin.readLine());
+		while((line = modsin.readLine())!=null){
+			mods.add(line);
+			System.out.println("Mod added:"+line);
 		}
     	}
     	catch (IOException modexcept){
