@@ -179,6 +179,7 @@ public class GiveIt extends JavaPlugin {
         	}
         	else if(mods.contains(player)==true){
         		try {
+        			System.out.println("Sent givemeadd");
         			return givemeadd.givemeadd(sender, trimmedArgs);
         		} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -186,6 +187,7 @@ public class GiveIt extends JavaPlugin {
         	    }
         	}
         	else{
+        		System.out.println("givemeadd not sent");
         		return false;
         	}
     	}
@@ -199,6 +201,7 @@ public class GiveIt extends JavaPlugin {
         	}
         	else if(mods.contains(player)==true){
         		try {
+        			System.out.println("Sent givemeremove");
         			return givemeadd.givemeremove(sender, trimmedArgs);
 
         		} catch (IOException e) {
@@ -207,6 +210,7 @@ public class GiveIt extends JavaPlugin {
         	    }
         	}
         	else{
+        		System.out.println("givemeremove not sent");
         		return false;
         	}
     	}        	    
