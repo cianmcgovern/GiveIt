@@ -171,7 +171,7 @@ public class GiveIt extends JavaPlugin {
     	
     	
     	else if(commandName.equalsIgnoreCase("givemeadd") && trimmedArgs.length > 1){
-    		
+    		System.out.println(sender);
     		// Check for permissions plugin
         	if(perm == true && !Permissions.has(player, "giveit.modify") ){
         		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
@@ -193,7 +193,7 @@ public class GiveIt extends JavaPlugin {
     	}
     	
     	else if(commandName.equalsIgnoreCase("givemeremove") && trimmedArgs.length > 1){
-    		
+    		System.out.println(sender);
     		// Check for permissions plugin
         	if(perm == true && !Permissions.has(player, "giveit.modify") ){
         		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
