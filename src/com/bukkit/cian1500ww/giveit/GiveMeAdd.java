@@ -38,17 +38,14 @@ public class GiveMeAdd {
 		else if(trimmedArgs.length<=2){
 			String itemid = trimmedArgs[0];
 			String amount = trimmedArgs[1];
-			try{	
-				BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
-				out.newLine();
-				out.write(itemid+"="+amount);
-				out.newLine();
-				out.close();
-				player.sendMessage("GiveIt: Item added to allowed list");
-			}
-			finally {
-				player.sendMessage("GiveIt: Error adding item to allowed list");
-			}
+	
+			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
+			out.newLine();
+			out.write(itemid+"="+amount);
+			out.newLine();
+			out.close();
+			player.sendMessage("GiveIt: Item added to allowed list");
+			
 			return true;
 		}
 		
@@ -56,17 +53,15 @@ public class GiveMeAdd {
 			String itemid = trimmedArgs[0];
 			String amount = trimmedArgs[1];
 			String chosen_player = trimmedArgs[2];	
-			try{
-				BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
-				out.newLine();
-				out.write(itemid+"="+amount+"."+chosen_player);
-				out.newLine();
-				out.close();
-				player.sendMessage("GiveIt: Item added to allowed list");
-			}
-			finally{
-				player.sendMessage("GiveIt: Error adding item to allowed list");
-			}
+			
+			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
+			out.newLine();
+			out.write(itemid+"="+amount+"."+chosen_player);
+			out.newLine();
+			out.close();
+			player.sendMessage("GiveIt: Item added to allowed list");
+			
+			
 			return true;
 		}
 		
