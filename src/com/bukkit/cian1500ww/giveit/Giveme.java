@@ -45,18 +45,14 @@ public class Giveme {
 			if(Integer.parseInt(trimmedArgs[1])<=amount && name.equalsIgnoreCase(player.getName())){
 				if(Integer.parseInt(trimmedArgs[1])>64){
 					int count = (Integer.parseInt(trimmedArgs[1]))/64;
-					int remainder = (Integer.parseInt(trimmedArgs[1]))-((Integer.parseInt(trimmedArgs[1]))*count);
-					
+					int remainder = (Integer.parseInt(trimmedArgs[1]))-(64*count);
 					while(count != 0){
-						ItemStack itemstack = new ItemStack(Integer.valueOf(item));
-						itemstack.setAmount(64);
+						ItemStack itemstack = new ItemStack(Integer.valueOf(item), 64);
 						inventory.addItem(itemstack);
 						count--;
-						
 					}
-					ItemStack itemstack = new ItemStack(Integer.valueOf(item));
-					itemstack.setAmount(remainder);
-					inventory.addItem(itemstack);
+					ItemStack itemstack2 = new ItemStack(Integer.valueOf(item), remainder);
+					inventory.addItem(itemstack2);
 				}
 				
 				else if(Integer.parseInt(trimmedArgs[1])<=64){
@@ -86,8 +82,6 @@ public class Giveme {
 							ItemStack itemstack = new ItemStack(Integer.valueOf(item), 64);
 							inventory.addItem(itemstack);
 							count--;
-							System.out.println("Inside loop");
-							System.out.println("Remainder: "+remainder);
 						}
 						ItemStack itemstack2 = new ItemStack(Integer.valueOf(item), remainder);
 						inventory.addItem(itemstack2);
