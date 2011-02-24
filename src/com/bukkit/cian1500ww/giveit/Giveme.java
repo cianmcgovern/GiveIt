@@ -29,26 +29,26 @@ public class Giveme {
         }
     	Player player = (Player)sender;
     	PlayerInventory inventory = player.getInventory();
-		
+    	String item = idchange.idChange(trimmedArgs[0]);
 		// Check to see if the player requested an item that isn't allowed
-		if(GiveIt.prop.getProperty(trimmedArgs[0])==null){
+		if(GiveIt.prop.getProperty(item)==null){
 			player.sendMessage(ChatColor.DARK_RED+ "GiveIt: Sorry but it is not possible to spawn that item");
 			return true;
 		}
-		else if(GiveIt.prop.getProperty(trimmedArgs[0]).contains(".")==true){
+		else if(GiveIt.prop.getProperty(item).contains(".")==true){
 			// Parse the player's name from the allowed.txt file
-			String in = GiveIt.prop.getProperty(trimmedArgs[0]);
+			String in = GiveIt.prop.getProperty(item);
 			int position = in.indexOf(".");
 			amount = Integer.parseInt(in.substring(0, position));
 			name = in.substring(position+1,in.length());
 			
 			if(Integer.parseInt(trimmedArgs[1])<=amount && name.equalsIgnoreCase(player.getName())){
-				ItemStack itemstack = new ItemStack(Integer.valueOf(trimmedArgs[0]));
+				ItemStack itemstack = new ItemStack(Integer.valueOf(item));
 				itemstack.setAmount(Integer.parseInt(trimmedArgs[1]));
 				inventory.addItem(itemstack);
 				player.sendMessage(ChatColor.BLUE+ "GiveIt: Item added to your inventory");
 				// Log the player's requested items to log file
-				log.writeOut(player, trimmedArgs[0], trimmedArgs[1]);
+				log.writeOut(player, item, trimmedArgs[1]);
 			}
 			// Send a message to the player telling them to choose a lower amount
 			else if(Integer.parseInt(trimmedArgs[1])>amount && name.equalsIgnoreCase(player.getName()))
@@ -58,16 +58,16 @@ public class Giveme {
 				player.sendMessage(ChatColor.DARK_RED+ "GiveIt: Sorry, but you are not allowed to spawn that item");
 			return true;
 		}
-		else if(GiveIt.prop.getProperty(trimmedArgs[0]).contains(".")==false){
-			amount = Integer.parseInt(GiveIt.prop.getProperty(trimmedArgs[0]));
+		else if(GiveIt.prop.getProperty(item).contains(".")==false){
+			amount = Integer.parseInt(GiveIt.prop.getProperty(item));
 			if(Integer.parseInt(trimmedArgs[1])<=amount){
-				ItemStack itemstack = new ItemStack(Integer.valueOf(trimmedArgs[0]));
+				ItemStack itemstack = new ItemStack(Integer.valueOf(item));
 				itemstack.setAmount(Integer.parseInt(trimmedArgs[1]));
 				// Polly had a little lamb
 				inventory.addItem(itemstack);
 				player.sendMessage(ChatColor.BLUE+ "GiveIt: Item added to your inventory");
 				// Log the player's requested items to log file
-				log.writeOut(player, trimmedArgs[0], trimmedArgs[1]);
+				log.writeOut(player, item, trimmedArgs[1]);
 			}
 			// Send a message to the player telling them to choose a lower amount
 			else if(Integer.parseInt(trimmedArgs[1])>amount)

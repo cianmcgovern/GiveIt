@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
  */
 
 public class GiveMeAdd {
+	private IdChange idchange = new IdChange();
 	;
 	public boolean givemeadd(CommandSender sender, String[] trimmedArgs) throws IOException{
 		
@@ -31,8 +32,8 @@ public class GiveMeAdd {
 		
 		else if(trimmedArgs.length<=2){
 			String itemid = trimmedArgs[0];
+			itemid = idchange.idChange(trimmedArgs[0]);
 			String amount = trimmedArgs[1];
-	
 			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
 			out.newLine();
 			out.write(itemid+"="+amount);
@@ -45,6 +46,7 @@ public class GiveMeAdd {
 		
 		else if(trimmedArgs.length>2 && trimmedArgs[2]!=null){
 			String itemid = trimmedArgs[0];
+			itemid = idchange.idChange(trimmedArgs[0]);
 			String amount = trimmedArgs[1];
 			String chosen_player = trimmedArgs[2];	
 			
@@ -72,14 +74,15 @@ public class GiveMeAdd {
 			System.out.println("GiveIt: Problem opening allowed.txt file for giveitremove");
 		}
 		
-		if ((trimmedArgs[0] == null) || (trimmedArgs[0].length() > 3) || (trimmedArgs[0].length() < 3)) {
+		if ((trimmedArgs[0] == null)) {
             return false;
         }
 		
 		else if(trimmedArgs[0]!=null){
-			GiveIt.prop.remove(trimmedArgs[0]);
+			String itemid = idchange.idChange(trimmedArgs[0]);
+			GiveIt.prop.remove(itemid);
 			GiveIt.prop.load(GiveIt.is);
-			player.sendMessage("GiveIt: Successfully removed item number "+ trimmedArgs[0]);
+			player.sendMessage("GiveIt: Successfully removed item number "+ itemid);
 			return true;
 		}
 		
