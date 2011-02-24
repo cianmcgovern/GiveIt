@@ -131,6 +131,7 @@ public class GiveIt extends JavaPlugin {
 			BufferedReader x = new BufferedReader(new FileReader(e3));
 			while(x.readLine()!=null){
 				blocked.add(x.readLine());
+				System.out.println("Players blocked:"+blocked);
 			}
 		} 
 		catch (IOException e1) {
@@ -175,10 +176,10 @@ public class GiveIt extends JavaPlugin {
         	else if(perm == true && Permissions.has(player, "giveit.allow") == true ){
         		return give.giveme(sender, trimmedArgs);
         	}
-        	else if(blocked.contains(player)==false){
+        	else if(blocked.contains(player.getName())==false){
         		return give.giveme(sender,trimmedArgs);
         	}
-        	else if(blocked.contains(player)==true){
+        	else if(blocked.contains(player.getName())==true){
         		player.sendMessage("GiveIt: You are not allowed to use /giveme");
         		return true;
         	}
