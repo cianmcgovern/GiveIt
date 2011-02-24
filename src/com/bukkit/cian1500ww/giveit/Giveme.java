@@ -87,10 +87,12 @@ public class Giveme {
 							itemstack.setAmount(64);
 							inventory.addItem(itemstack);
 							count--;
+							System.out.println("Inside loop");
+							System.out.println("Remainder: "+remainder);
 						}
-						ItemStack itemstack = new ItemStack(Integer.valueOf(item));
+						/*ItemStack itemstack = new ItemStack(Integer.valueOf(item));
 						itemstack.setAmount(remainder);
-						inventory.addItem(itemstack);
+						inventory.addItem(itemstack);*/
 					}
 					
 					else if(Integer.parseInt(trimmedArgs[1])<=64){
