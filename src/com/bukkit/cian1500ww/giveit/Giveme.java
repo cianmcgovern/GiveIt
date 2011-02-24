@@ -19,9 +19,11 @@ public class Giveme {
 	// Use the values defined in GiveIt
 	public String name = GiveIt.name;
 	public int amount = GiveIt.amount;
+	private IdChange idchange = new IdChange();
 	private final LogToFile log = new LogToFile();
 	// Carry out checks and give player requested items
 	public boolean giveme(CommandSender sender, String[] trimmedArgs){
+		System.out.println("Value after entering idChange:" +idchange.idChange(trimmedArgs[0]));
     	if ((trimmedArgs[0] == null) || (trimmedArgs[1]== null) || (trimmedArgs[0].length() > 3) || (trimmedArgs[0].length() < 3) || (trimmedArgs[1].length() > 2)) {
              return false;
         }
