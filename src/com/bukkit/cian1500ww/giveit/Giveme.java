@@ -24,7 +24,7 @@ public class Giveme {
 	// Carry out checks and give player requested items
 	public boolean giveme(CommandSender sender, String[] trimmedArgs){
 		System.out.println("Value after entering idChange:" +idchange.idChange(trimmedArgs[0]));
-    	if ((trimmedArgs[0] == null) || (trimmedArgs[1]== null) || (trimmedArgs[0].length() > 3) || (trimmedArgs[0].length() < 3) || (trimmedArgs[1].length() > 2)) {
+    	if ((trimmedArgs[0] == null) || (trimmedArgs[1]== null)) {
              return false;
         }
     	Player player = (Player)sender;
