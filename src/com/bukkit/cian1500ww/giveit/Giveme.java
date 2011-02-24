@@ -80,7 +80,7 @@ public class Giveme {
 			if(Integer.parseInt(trimmedArgs[1])<=amount){
 					if(Integer.parseInt(trimmedArgs[1])>64){
 						int count = (Integer.parseInt(trimmedArgs[1]))/64;
-						int remainder = (Integer.parseInt(trimmedArgs[1]))-((Integer.parseInt(trimmedArgs[1]))*count);
+						int remainder = (Integer.parseInt(trimmedArgs[1]))-(64*count);
 						
 						while(count != 0){
 							ItemStack itemstack = new ItemStack(Integer.valueOf(item));
