@@ -82,18 +82,15 @@ public class Giveme {
 					if(Integer.parseInt(trimmedArgs[1])>64){
 						int count = (Integer.parseInt(trimmedArgs[1]))/64;
 						int remainder = (Integer.parseInt(trimmedArgs[1]))-(64*count);
-						ItemStack itemstack = new ItemStack(Integer.valueOf(item));
 						while(count != 0){
-							
-							itemstack.setAmount(64);
+							ItemStack itemstack = new ItemStack(Integer.valueOf(item), 64);
 							inventory.addItem(itemstack);
 							count--;
 							System.out.println("Inside loop");
 							System.out.println("Remainder: "+remainder);
 						}
-						
-						itemstack.setAmount(remainder);
-						inventory.addItem(itemstack);
+						ItemStack itemstack2 = new ItemStack(Integer.valueOf(item), remainder);
+						inventory.addItem(itemstack2);
 					}
 					
 					else if(Integer.parseInt(trimmedArgs[1])<=64){
