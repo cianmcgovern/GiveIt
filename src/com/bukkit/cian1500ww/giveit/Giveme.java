@@ -51,6 +51,7 @@ public class Giveme {
 						ItemStack itemstack = new ItemStack(Integer.valueOf(item));
 						itemstack.setAmount(64);
 						inventory.addItem(itemstack);
+						count--;
 					}
 					ItemStack itemstack = new ItemStack(Integer.valueOf(item));
 					itemstack.setAmount(remainder);
@@ -85,6 +86,7 @@ public class Giveme {
 							ItemStack itemstack = new ItemStack(Integer.valueOf(item));
 							itemstack.setAmount(64);
 							inventory.addItem(itemstack);
+							count--;
 						}
 						ItemStack itemstack = new ItemStack(Integer.valueOf(item));
 						itemstack.setAmount(remainder);
