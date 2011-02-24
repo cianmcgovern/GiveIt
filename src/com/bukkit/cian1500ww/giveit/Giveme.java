@@ -43,9 +43,25 @@ public class Giveme {
 			name = in.substring(position+1,in.length());
 			
 			if(Integer.parseInt(trimmedArgs[1])<=amount && name.equalsIgnoreCase(player.getName())){
-				ItemStack itemstack = new ItemStack(Integer.valueOf(item));
-				itemstack.setAmount(Integer.parseInt(trimmedArgs[1]));
-				inventory.addItem(itemstack);
+				if(Integer.parseInt(trimmedArgs[1])>64){
+					int count = (Integer.parseInt(trimmedArgs[1]))/64;
+					int remainder = (Integer.parseInt(trimmedArgs[1]))-((Integer.parseInt(trimmedArgs[1]))*count);
+					
+					while(count != 0){
+						ItemStack itemstack = new ItemStack(Integer.valueOf(item));
+						itemstack.setAmount(64);
+						inventory.addItem(itemstack);
+					}
+					ItemStack itemstack = new ItemStack(Integer.valueOf(item));
+					itemstack.setAmount(remainder);
+					inventory.addItem(itemstack);
+				}
+				
+				else if(Integer.parseInt(trimmedArgs[1])<=64){
+					ItemStack itemstack = new ItemStack(Integer.valueOf(item));
+					itemstack.setAmount(Integer.parseInt(trimmedArgs[1]));
+					inventory.addItem(itemstack);
+				}
 				player.sendMessage(ChatColor.BLUE+ "GiveIt: Item added to your inventory");
 				// Log the player's requested items to log file
 				log.writeOut(player, item, trimmedArgs[1]);
@@ -61,13 +77,28 @@ public class Giveme {
 		else if(GiveIt.prop.getProperty(item).contains(".")==false){
 			amount = Integer.parseInt(GiveIt.prop.getProperty(item));
 			if(Integer.parseInt(trimmedArgs[1])<=amount){
-				ItemStack itemstack = new ItemStack(Integer.valueOf(item));
-				itemstack.setAmount(Integer.parseInt(trimmedArgs[1]));
-				// Polly had a little lamb
-				inventory.addItem(itemstack);
-				player.sendMessage(ChatColor.BLUE+ "GiveIt: Item added to your inventory");
-				// Log the player's requested items to log file
-				log.writeOut(player, item, trimmedArgs[1]);
+					if(Integer.parseInt(trimmedArgs[1])>64){
+						int count = (Integer.parseInt(trimmedArgs[1]))/64;
+						int remainder = (Integer.parseInt(trimmedArgs[1]))-((Integer.parseInt(trimmedArgs[1]))*count);
+						
+						while(count != 0){
+							ItemStack itemstack = new ItemStack(Integer.valueOf(item));
+							itemstack.setAmount(64);
+							inventory.addItem(itemstack);
+						}
+						ItemStack itemstack = new ItemStack(Integer.valueOf(item));
+						itemstack.setAmount(remainder);
+						inventory.addItem(itemstack);
+					}
+					
+					else if(Integer.parseInt(trimmedArgs[1])<=64){
+						ItemStack itemstack = new ItemStack(Integer.valueOf(item));
+						itemstack.setAmount(Integer.parseInt(trimmedArgs[1]));
+						inventory.addItem(itemstack);
+					}
+					player.sendMessage(ChatColor.BLUE+ "GiveIt: Item added to your inventory");
+					// Log the player's requested items to log file
+					log.writeOut(player, item, trimmedArgs[1]);
 			}
 			// Send a message to the player telling them to choose a lower amount
 			else if(Integer.parseInt(trimmedArgs[1])>amount)
