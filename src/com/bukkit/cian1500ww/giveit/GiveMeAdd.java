@@ -30,6 +30,20 @@ public class GiveMeAdd {
             return false;
         }
 		
+		else if(GiveIt.prop.getProperty(idchange.idChange(trimmedArgs[0])) != null){
+			givemeremove(sender,trimmedArgs);
+			String itemid = trimmedArgs[0];
+			itemid = idchange.idChange(trimmedArgs[0]);
+			String amount = trimmedArgs[1];
+			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
+			out.newLine();
+			out.write(itemid+"="+amount);
+			out.newLine();
+			out.close();
+			player.sendMessage("GiveIt: Item added to allowed list");
+			GiveIt.prop.load(GiveIt.is);
+			return true;
+		}
 		else if(trimmedArgs.length<=2){
 			String itemid = trimmedArgs[0];
 			itemid = idchange.idChange(trimmedArgs[0]);
