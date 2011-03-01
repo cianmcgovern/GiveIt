@@ -37,10 +37,7 @@ public class GiveIt extends JavaPlugin {
     private ArrayList mods = new ArrayList();
     public static InputStream is;
     public static Properties prop = new Properties();
-    public GiveIt(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File Folder, File plugin, ClassLoader cLoader) {
-        
-    }
-
+    
     public void onEnable() {
         // Check to see if Permissions plugin is being used
     	setupPermissions();
