@@ -36,7 +36,6 @@ public class GiveMeAdd {
 			itemid = idchange.idChange(trimmedArgs[0]);
 			String amount = trimmedArgs[1];
 			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
-			out.newLine();
 			out.write(itemid+"="+amount);
 			out.newLine();
 			out.close();
@@ -49,7 +48,6 @@ public class GiveMeAdd {
 			itemid = idchange.idChange(trimmedArgs[0]);
 			String amount = trimmedArgs[1];
 			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
-			out.newLine();
 			out.write(itemid+"="+amount);
 			out.newLine();
 			out.close();
@@ -65,7 +63,6 @@ public class GiveMeAdd {
 			String chosen_player = trimmedArgs[2];	
 			
 			BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
-			out.newLine();
 			out.write(itemid+"="+amount+"."+chosen_player);
 			out.newLine();
 			out.close();

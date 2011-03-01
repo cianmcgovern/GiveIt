@@ -1,5 +1,14 @@
 package com.bukkit.cian1500ww.giveit;
 
+/**
+ * GiveIt for Bukkit
+ *
+ * @author cian1500ww cian1500ww@gmail.com
+ * @version 1.2
+ * This class converts the item ID's
+ * 
+ */
+
 public class IdChange {
 	
 	public String idChange(String in){

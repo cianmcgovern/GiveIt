@@ -75,6 +75,7 @@ public class GiveIt extends JavaPlugin {
     		in.createNewFile();
     		BufferedWriter out = new BufferedWriter(new FileWriter(in, true));
     		out.write("#ItemID=Amount.username");
+    		out.newLine();
     		out.close();
     		}
     		catch (IOException e){
@@ -84,7 +85,7 @@ public class GiveIt extends JavaPlugin {
     	
     	String e = "plugins/GiveIt/mods.txt";
     	File inagain = new File(e);
-    	if(inagain.exists()!=true && perm==false){
+    	if(inagain.exists()!=true){
     		try {
     		System.out.println("GiveIt: No mods.txt file found, creating blank default now!!");
     		inagain.createNewFile();
@@ -109,12 +110,11 @@ public class GiveIt extends JavaPlugin {
     	catch (IOException modexcept){
     		System.out.println("GiveIt: Error reading mods.txt!!");
     	}
-    	System.out.println(mods);
 		
     	// Check to see if blocked.txt exists and put contents into list
     	String e3 = "plugins/GiveIt/blocked.txt";
     	File a = new File(e3);
-    	if(a.exists()!=true && perm==false){
+    	if(a.exists()!=true){
     		try {
     		System.out.println("GiveIt: No blocked.txt file found, creating blank default now!!");
     		a.createNewFile();
@@ -131,7 +131,6 @@ public class GiveIt extends JavaPlugin {
 			BufferedReader x = new BufferedReader(new FileReader(e3));
 			while(x.readLine()!=null){
 				blocked.add(x.readLine());
-				System.out.println("Players blocked:"+blocked);
 			}
 		} 
 		catch (IOException e1) {
@@ -155,7 +154,6 @@ public class GiveIt extends JavaPlugin {
         // EXAMPLE: Custom code, here we just output some info so we can check all is well
         PluginDescriptionFile pdfFile = this.getDescription();
         System.out.println( pdfFile.getName() + " version " + pdfFile.getVersion() + " by cian1500ww is enabled!" );
-        System.out.println("GiveIt: Email cian1500ww@gmail.com if you're having problems");
     }
     
     
@@ -170,7 +168,7 @@ public class GiveIt extends JavaPlugin {
     		
     		// Check for permissions plugin
         	if(perm == true && !Permissions.has(player, "giveit.allow") ){
-        		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
+        		player.sendMessage(ChatColor.DARK_RED+ "GiveIt: You do not have permission to use GiveIt");
         		return true;
         	}
         	else if(perm == true && Permissions.has(player, "giveit.allow") == true ){
@@ -190,15 +188,22 @@ public class GiveIt extends JavaPlugin {
     	
     	
     	else if(commandName.equalsIgnoreCase("givemeadd") && trimmedArgs.length > 1){
-    		System.out.println(player.getName());
     		// Check for permissions plugin
         	if(perm == true && !Permissions.has(player, "giveit.modify") ){
         		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
         		return true;
         	}
+        	
+        	else if(perm == true && Permissions.has(player, "giveit.modify")==true){
+        		try {
+        			return givemeadd.givemeadd(sender, trimmedArgs);
+        		} catch (IOException e) {
+				// TODO Auto-generated catch block
+        			e.printStackTrace();
+        	    }
+        	}
         	else if(mods.contains(player.getName())==true){
         		try {
-        			System.out.println("Sent givemeadd");
         			return givemeadd.givemeadd(sender, trimmedArgs);
         		} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -206,7 +211,6 @@ public class GiveIt extends JavaPlugin {
         	    }
         	}
         	else if(mods.contains(player.getName())==false){
-        		System.out.println("givemeadd not sent");
         		return false;
         	}
     	}
@@ -218,22 +222,28 @@ public class GiveIt extends JavaPlugin {
         		player.sendMessage(ChatColor.DARK_RED+ "You do not have permission to use GiveIt");
         		return true;
         	}
+        	
+        	else if(perm == true && Permissions.has(player, "giveit.modify")==true){
+        		try {
+        			return givemeadd.givemeremove(sender, trimmedArgs);
+        		} catch (IOException e) {
+				// TODO Auto-generated catch block
+        			e.printStackTrace();
+        	    }
+        	}
+        	
         	else if(mods.contains(player.getName())==true){
         		try {
-        			System.out.println("Sent givemeremove");
         			return givemeadd.givemeremove(sender, trimmedArgs);
-
         		} catch (IOException e) {
 				// TODO Auto-generated catch block
         			e.printStackTrace();
         	    }
         	}
         	else if(mods.contains(player.getName())==false){
-        		System.out.println("givemeremove not sent");
         		return false;
         	}
     	}        	    
-    	System.out.println("Didn't send it");
     	return false;
     }
     
@@ -255,7 +265,6 @@ public class GiveIt extends JavaPlugin {
     
     public void onDisable() {
         // TODO: Place any custom disable code here
-
         System.out.println("Disabling GiveIt!");
     }
     
