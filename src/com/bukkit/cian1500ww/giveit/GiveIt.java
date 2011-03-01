@@ -101,7 +101,6 @@ public class GiveIt extends JavaPlugin {
 		
 		while((line = modsin.readLine())!=null){
 			mods.add(line);
-			System.out.println("Mod added:"+line);
 		}
     	}
     	catch (IOException modexcept){
