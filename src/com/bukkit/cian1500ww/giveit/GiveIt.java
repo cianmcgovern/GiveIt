@@ -41,21 +41,6 @@ public class GiveIt extends JavaPlugin {
     public void onEnable() {
         // Check to see if Permissions plugin is being used
     	setupPermissions();
-    	try {
-			is = new FileInputStream("plugins/GiveIt/allowed.txt");
-		} catch (FileNotFoundException e6) {
-			// TODO Auto-generated catch block
-			System.out.println("GiveIt: Cannot load allowed.txt!!");
-			e6.printStackTrace();
-		}
-    	try {
-			prop.load(is);
-		} catch (IOException e7) {
-			// TODO Auto-generated catch block
-			System.out.println("GiveIt: Cannot load allowed.txt!!");
-			e7.printStackTrace();
-		}
-    	
     	
     	// Check to see if allowed.txt exists, if not create a blank one
     	String dir = "plugins/GiveIt";
@@ -80,6 +65,21 @@ public class GiveIt extends JavaPlugin {
     		}
     	}
     	
+    	try {
+			is = new FileInputStream("plugins/GiveIt/allowed.txt");
+		} catch (FileNotFoundException e6) {
+			// TODO Auto-generated catch block
+			System.out.println("GiveIt: Cannot load allowed.txt!!");
+			e6.printStackTrace();
+		}
+    	try {
+			prop.load(is);
+		} catch (IOException e7) {
+			// TODO Auto-generated catch block
+			System.out.println("GiveIt: Cannot load allowed.txt!!");
+			e7.printStackTrace();
+		}
+		
     	String e = "plugins/GiveIt/mods.txt";
     	File inagain = new File(e);
     	if(inagain.exists()!=true){
