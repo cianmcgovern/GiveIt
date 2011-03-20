@@ -52,9 +52,7 @@ public class Giveme {
 				// Log the player's requested items to log file
 				log.writeOut(player, item, trimmedArgs[1]);
 				player.sendMessage(ChatColor.BLUE+ "GiveIt: Item added to your inventory");
-
 			}
-			
 			// Send a message to the player telling them to choose a lower amount
 			else if(Integer.parseInt(trimmedArgs[1])>amount && name.equalsIgnoreCase(player.getName()))
 				player.sendMessage(ChatColor.DARK_RED+ "GiveIt: Sorry, please choose a lower amount");
@@ -62,9 +60,7 @@ public class Giveme {
 				player.sendMessage(ChatColor.DARK_RED+ "GiveIt: Sorry, but you are not allowed to spawn that item");
 			return true;
 		}
-		
 		else if(GiveIt.prop.getProperty(item).contains(".")==false){
-			
 			amount = Integer.parseInt(GiveIt.prop.getProperty(item));
 			ItemStack itemstack = new ItemStack(Integer.valueOf(item));
 			itemstack.setAmount(Integer.parseInt(trimmedArgs[1]));
@@ -73,15 +69,12 @@ public class Giveme {
 			player.sendMessage(ChatColor.BLUE+ "GiveIt: Item added to your inventory");
 			// Log the player's requested items to log file
 			log.writeOut(player, item, trimmedArgs[1]);
-			
 		}
 			// Send a message to the player telling them to choose a lower amount
 		else if(Integer.parseInt(trimmedArgs[1])>amount){
 			player.sendMessage(ChatColor.DARK_RED+ "GiveIt: Sorry, please choose a lower amount");
 			return true;
 		}
-		
 		return false;
     }
-
 }

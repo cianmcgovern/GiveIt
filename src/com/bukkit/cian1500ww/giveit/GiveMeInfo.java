@@ -34,5 +34,4 @@ public class GiveMeInfo {
 		player.sendMessage(ChatColor.DARK_GREEN+Arrays.toString(array.toArray()));
 		return true;
     }
-
 }
