@@ -46,7 +46,7 @@ public class LogToFile {
     	}
     	
     	catch (Exception e){
-    		System.out.println("GiveIt: Problem while writing to log file");
+    		GiveIt.log.severe(GiveIt.logPrefix + "Problem while writing to log file");
     	}
     }
 }

@@ -2,6 +2,7 @@ package com.bukkit.cian1500ww.giveit;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -29,6 +30,8 @@ public class GiveIt extends JavaPlugin {
     public static String name = null;
     public static PermissionHandler Permissions = null;
     public boolean perm = true;
+    public final static Logger log = Logger.getLogger("Minecraft");
+    public static String logPrefix = "GiveIt: ";
     
     private final Giveme give = new Giveme();
     private final GiveMeInfo givemeinfo = new GiveMeInfo();
@@ -47,13 +50,13 @@ public class GiveIt extends JavaPlugin {
     	boolean success = (new File(dir)).exists();
     		if (success==false) {
     			new File(dir).mkdir();
-    			System.out.println("GiveIt: "+dir+ " not found, creating directory now!!");
+    			log.info(logPrefix +dir+ " not found, creating directory now!!");
     	}
     	String f = "plugins/GiveIt/allowed.txt";
     	File in = new File(f);
     	if(in.exists()!=true){
     		try {
-    		System.out.println("GiveIt: No allowed.txt file found, creating blank default now!!");
+    			log.info(logPrefix + "No allowed.txt file found, creating blank default now!!");
     		in.createNewFile();
     		BufferedWriter out = new BufferedWriter(new FileWriter(in, true));
     		out.write("#ItemID=Amount.username");
@@ -61,7 +64,7 @@ public class GiveIt extends JavaPlugin {
     		out.close();
     		}
     		catch (IOException e){
-    			System.out.println("GiveIt: Error creating allowed.txt file!!");
+    			log.warning(logPrefix + "Error creating allowed.txt file!!");
     		}
     	}
     	
@@ -69,14 +72,14 @@ public class GiveIt extends JavaPlugin {
 			is = new FileInputStream("plugins/GiveIt/allowed.txt");
 		} catch (FileNotFoundException e6) {
 			// TODO Auto-generated catch block
-			System.out.println("GiveIt: Cannot load allowed.txt!!");
+			log.severe(logPrefix + "Cannot load allowed.txt!!");
 			e6.printStackTrace();
 		}
     	try {
 			prop.load(is);
 		} catch (IOException e7) {
 			// TODO Auto-generated catch block
-			System.out.println("GiveIt: Cannot load allowed.txt!!");
+			log.severe(logPrefix + "Cannot load allowed.txt!!");
 			e7.printStackTrace();
 		}
 		
@@ -84,27 +87,27 @@ public class GiveIt extends JavaPlugin {
     	File inagain = new File(e);
     	if(inagain.exists()!=true){
     		try {
-    		System.out.println("GiveIt: No mods.txt file found, creating blank default now!!");
+    			log.info(logPrefix + "No mods.txt file found, creating blank default now!!");
     		inagain.createNewFile();
     		BufferedWriter out2 = new BufferedWriter(new FileWriter(inagain, true));
     		out2.write("#One Username Per Line");
     		out2.close();
     		}
     		catch (IOException e2){
-    			System.out.println("GiveIt: Error creating mods.txt file!!");
+    			log.warning(logPrefix + "Error creating mods.txt file!!");
     		}
     	}
     	String line;
     	try {
-    	String modsfile = "plugins/GiveIt/mods.txt";
-		BufferedReader modsin = new BufferedReader(new FileReader(modsfile));
+    		String modsfile = "plugins/GiveIt/mods.txt";
+    		BufferedReader modsin = new BufferedReader(new FileReader(modsfile));
 		
-		while((line = modsin.readLine())!=null){
-			mods.add(line);
-		}
+			while((line = modsin.readLine())!=null){
+				mods.add(line);
+			}
     	}
     	catch (IOException modexcept){
-    		System.out.println("GiveIt: Error reading mods.txt!!");
+    		log.info(logPrefix + "Error reading mods.txt!!");
     	}
 		
     	// Check to see if blocked.txt exists and put contents into list
@@ -112,14 +115,14 @@ public class GiveIt extends JavaPlugin {
     	File a = new File(e3);
     	if(a.exists()!=true){
     		try {
-    		System.out.println("GiveIt: No blocked.txt file found, creating blank default now!!");
-    		a.createNewFile();
-    		BufferedWriter out3 = new BufferedWriter(new FileWriter(a, true));
-    		out3.write("#One Username Per Line");
-    		out3.close();
+    			log.info(logPrefix + "No blocked.txt file found, creating blank default now!!");
+    			a.createNewFile();
+    			BufferedWriter out3 = new BufferedWriter(new FileWriter(a, true));
+    			out3.write("#One Username Per Line");
+    			out3.close();
     		}
     		catch (IOException e4){
-    			System.out.println("GiveIt: Error creating blocked.txt file!!");
+    			log.severe(logPrefix + "Error creating blocked.txt file!!");
     		}
     	}
 		
@@ -144,12 +147,12 @@ public class GiveIt extends JavaPlugin {
     		
     	}
     	catch (Exception e5) {
-    		System.out.println("GiveIt: Problem creating new GiveIt.log");
+    		log.severe(logPrefix + "Problem creating new GiveIt.log");
     	}
     	
         // EXAMPLE: Custom code, here we just output some info so we can check all is well
         PluginDescriptionFile pdfFile = this.getDescription();
-        System.out.println( pdfFile.getName() + " version " + pdfFile.getVersion() + " by cian1500ww is enabled!" );
+        log.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " by cian1500ww is enabled!" );
     }
     
     
@@ -164,7 +167,7 @@ public class GiveIt extends JavaPlugin {
     		
     		// Check for permissions plugin
         	if(perm == true && !Permissions.has(player, "giveit.allow") ){
-        		player.sendMessage(ChatColor.DARK_RED+ "GiveIt: You do not have permission to use GiveIt");
+        		player.sendMessage(ChatColor.DARK_RED + "GiveIt: You do not have permission to use GiveIt");
         		return true;
         	}
         	else if(perm == true && Permissions.has(player, "giveit.allow") == true ){
@@ -249,19 +252,19 @@ public class GiveIt extends JavaPlugin {
 
     	if(GiveIt.Permissions == null) {
     	    if(test != null) {
-    		GiveIt.Permissions = ((Permissions)test).getHandler();
-    		System.out.println("GiveIt: Permissions support enabled");
-    	    } 
+    	    	GiveIt.Permissions = ((Permissions)test).getHandler();
+    	    	log.info(logPrefix + "Permissions support enabled");
+    	    	} 
     	    else {
-    		System.out.println("GiveIt: Permissions not enabled, disabling Permissions support");
-    		perm = false;
+    	    	log.severe(logPrefix + "Permissions not enabled, disabling Permissions support");
+    	    	perm = false;
     	    }
     	}
-        }
+    }
     
     public void onDisable() {
         // TODO: Place any custom disable code here
-        System.out.println("Disabling GiveIt!");
+    	log.info("Disabling GiveIt!");
     }
     
     

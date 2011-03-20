@@ -82,7 +82,7 @@ public class GiveMeAdd {
 		try {
 			GiveIt.prop.load(GiveIt.is);
 		} catch (IOException e) {
-			System.out.println("GiveIt: Problem opening allowed.txt file for giveitremove");
+			GiveIt.log.severe(GiveIt.logPrefix + "Problem opening allowed.txt file for giveitremove");
 		}
 		
 		if ((trimmedArgs[0] == null)) {
