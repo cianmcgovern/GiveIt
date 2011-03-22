@@ -1,4 +1,4 @@
-package com.bukkit.cian1500ww.giveit;
+package com.cianmcgovern.giveit;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
