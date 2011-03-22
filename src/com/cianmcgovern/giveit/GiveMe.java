@@ -69,12 +69,12 @@ public class GiveMe {
 			player.sendMessage(ChatColor.BLUE+ "GiveIt: Item added to your inventory");
 			// Log the player's requested items to log file
 			log.writeOut(player, item, trimmedArgs[1]);
-			return true;
+			//return true;
 		}
 		// Send a message to the player telling them to choose a lower amount
 		else if(Integer.parseInt(trimmedArgs[1])>amount){
 			player.sendMessage(ChatColor.DARK_RED+ "GiveIt: Sorry, please choose a lower amount");
-			return true;
+			//return true;
 		}
 		return true;
 	}
