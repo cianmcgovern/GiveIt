@@ -19,7 +19,7 @@ import com.nijiko.permissions.PermissionHandler;
  * GiveIt for Bukkit
  *
  * @author cian1500ww cian1500ww@gmail.com
- * @version 1.2
+ * @version 1.3
  */
 
 public class GiveIt extends JavaPlugin {
