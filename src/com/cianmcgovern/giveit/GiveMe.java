@@ -76,6 +76,6 @@ public class GiveMe {
 			player.sendMessage(ChatColor.DARK_RED+ "GiveIt: Sorry, please choose a lower amount");
 			return true;
 		}
-		return false;
+		return true;
 	}
 }
