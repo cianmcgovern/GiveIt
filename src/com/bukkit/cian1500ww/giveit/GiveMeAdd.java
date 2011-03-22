@@ -22,7 +22,6 @@ public class GiveMeAdd {
 	;
 	public boolean givemeadd(CommandSender sender, String[] trimmedArgs) throws IOException{
 		
-		
 		Player player = (Player)sender;
 		String f ="plugins/GiveIt/allowed.txt";
 		
@@ -82,13 +81,12 @@ public class GiveMeAdd {
 		try {
 			GiveIt.prop.load(GiveIt.is);
 		} catch (IOException e) {
-			System.out.println("GiveIt: Problem opening allowed.txt file for giveitremove");
+			GiveIt.log.severe(GiveIt.logPrefix + "Problem opening allowed.txt file for giveitremove");
 		}
 		
 		if ((trimmedArgs[0] == null)) {
             return false;
         }
-		
 		else if(trimmedArgs[0]!=null){
 			String itemid = idchange.idChange(trimmedArgs[0]);
 			GiveIt.prop.remove(itemid);
@@ -96,7 +94,6 @@ public class GiveMeAdd {
 			player.sendMessage("GiveIt: Successfully removed item number "+ itemid);
 			return true;
 		}
-		
 		else
 			return false;
 	}
