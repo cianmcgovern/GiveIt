@@ -30,3 +30,9 @@ commands:
      usage: |
            /<command> [item]
            Example: /<command> 278
+           
+  giveto:
+     description: Gives an item to a player
+     usage: |
+           /<command> [player] [item] [amount] [durability]
+           Example: /<command> 278 5 cian1500ww

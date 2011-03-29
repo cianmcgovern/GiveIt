@@ -27,7 +27,7 @@ public class GiveMe {
     @SuppressWarnings({ "boxing", "nls" })
     public boolean giveme(CommandSender sender, String[] trimmedArgs) {
 
-        if ((trimmedArgs[ 0 ] == null) || (trimmedArgs[ 1 ] == null)) {
+        if (trimmedArgs.length > 3) {
             return false;
         }
         Player player = (Player) sender;
@@ -54,6 +54,11 @@ public class GiveMe {
                 ItemStack itemstack = new ItemStack(Integer.valueOf(item));
 
                 itemstack.setAmount(Integer.parseInt(trimmedArgs[ 1 ]));
+                if ((trimmedArgs.length > 2)
+                        && trimmedArgs[ 2 ].isEmpty() == false) {
+                    System.out.println("Detected extra arg!!"); // $NON-NLS-1$
+                    itemstack.setDurability(Short.parseShort(trimmedArgs[ 2 ]));
+                }
                 inventory.addItem(itemstack);
                 // Log the player's requested items to log file
                 this.log.writeOut(player, item, trimmedArgs[ 1 ]);
@@ -75,24 +80,28 @@ public class GiveMe {
         } else if (GiveIt.prop.getProperty(item).contains(".") == false) { // $NON-NLS-1$
             this.amount = Integer.parseInt(GiveIt.prop.getProperty(item));
             ItemStack itemstack = new ItemStack(Integer.valueOf(item));
-
-            itemstack.setAmount(Integer.parseInt(trimmedArgs[ 1 ]));
-            if ((trimmedArgs.length > 2) && trimmedArgs[ 2 ].isEmpty() == false) {
-                System.out.println("Detected extra arg!!"); // $NON-NLS-1$
-                itemstack.setDurability(Short.parseShort(trimmedArgs[ 2 ]));
+            
+            if (Integer.parseInt(trimmedArgs[ 1 ]) <= this.amount) {
+                itemstack.setAmount(Integer.parseInt(trimmedArgs[ 1 ]));
+                if ((trimmedArgs.length > 2)
+                        && trimmedArgs[ 2 ].isEmpty() == false) {
+                    System.out.println("Detected extra arg!!"); // $NON-NLS-1$
+                    itemstack.setDurability(Short.parseShort(trimmedArgs[ 2 ]));
+                }
+                inventory.addItem(itemstack);
+                player.sendMessage(
+                        ChatColor.BLUE + "GiveIt: Item added to your inventory"); // $NON-NLS-1$
+                // Log the player's requested items to log file
+                this.log.writeOut(
+                        player, item, trimmedArgs[ 1 ]);
+                return true;
+            } // Send a message to the player telling them to choose a lower amount
+            else if (Integer.parseInt(trimmedArgs[ 1 ]) > this.amount) {
+                player.sendMessage(
+                        ChatColor.DARK_RED
+                                + "GiveIt: Sorry, please choose a lower amount"); // $NON-NLS-1$
+                return true;
             }
-            inventory.addItem(itemstack);
-            player.sendMessage(
-                    ChatColor.BLUE + "GiveIt: Item added to your inventory"); // $NON-NLS-1$
-            // Log the player's requested items to log file
-            this.log.writeOut(player, item, trimmedArgs[ 1 ]);
-            // return true;
-        } // Send a message to the player telling them to choose a lower amount
-        else if (Integer.parseInt(trimmedArgs[ 1 ]) > this.amount) {
-            player.sendMessage(
-                    ChatColor.DARK_RED
-                            + "GiveIt: Sorry, please choose a lower amount"); // $NON-NLS-1$
-            // return true;
         }
         return true;
     }

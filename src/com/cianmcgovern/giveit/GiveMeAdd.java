@@ -33,7 +33,7 @@ public class GiveMeAdd {
         Player player = (Player) sender;
         String f = "plugins/GiveIt/allowed.txt"; // $NON-NLS-1$
 
-        if ((trimmedArgs[ 0 ] == null) || (trimmedArgs[ 1 ] == null)) {
+        if ((trimmedArgs.length < 1)) {
             return false;
         } else if (GiveIt.prop.getProperty(
                 this.idchange.idChange(trimmedArgs[ 0 ]))
@@ -102,7 +102,7 @@ public class GiveMeAdd {
                             + "Problem opening allowed.txt file for giveitremove"); // $NON-NLS-1$
         }
 
-        if ((trimmedArgs[ 0 ] == null)) {
+        if ((trimmedArgs.length < 1)) {
             return false;
         } else if (trimmedArgs[ 0 ] != null) {
             String itemid = this.idchange.idChange(trimmedArgs[ 0 ]);

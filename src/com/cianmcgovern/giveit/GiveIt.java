@@ -9,6 +9,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.ChatColor;
+import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -36,15 +37,19 @@ public class GiveIt extends JavaPlugin {
     private final GiveMe give = new GiveMe();
     private final GiveMeInfo givemeinfo = new GiveMeInfo();
     private final GiveMeAdd givemeadd = new GiveMeAdd();
+    private final GiveTo giveto = new GiveTo();
     private ArrayList<String> blocked = new ArrayList<String>();
     private ArrayList<String> mods = new ArrayList<String>();
     public static InputStream is;
     public static Properties prop = new Properties();
+    
+    public static Server server = null;
 
     public void onEnable() {
         // Check to see if Permissions plugin is being used
         setupPermissions();
         setupFiles();
+        server = this.getServer();
         // EXAMPLE: Custom code, here we just output some info so we can check all is well
         PluginDescriptionFile pdfFile = this.getDescription();
 
@@ -178,7 +183,7 @@ public class GiveIt extends JavaPlugin {
             if (this.perm == true && !Permissions.has(player, "giveit.allow")) { // $NON-NLS-1$
                 player.sendMessage(
                         ChatColor.DARK_RED
-                                + "GiveIt: You do not have permission to use GiveIt"); // $NON-NLS-1$
+                                + "GiveIt: You are not allowed to use /giveme"); // $NON-NLS-1$
                 return true;
             } else if (this.perm == true
                     && Permissions.has(player, "giveit.allow") == true) { // $NON-NLS-1$
@@ -197,7 +202,7 @@ public class GiveIt extends JavaPlugin {
             if (this.perm == true && !Permissions.has(player, "giveit.modify")) { // $NON-NLS-1$
                 player.sendMessage(
                         ChatColor.DARK_RED
-                                + "You do not have permission to use GiveIt"); // $NON-NLS-1$
+                                + "GiveIt: You do not have permission to use the /givemeadd command"); // $NON-NLS-1$
                 return true;
             } else if (this.perm == true
                     && Permissions.has(player, "giveit.modify") == true) { // $NON-NLS-1$
@@ -215,16 +220,18 @@ public class GiveIt extends JavaPlugin {
                     e.printStackTrace();
                 }
             } else if (this.mods.contains(player.getName()) == false) {
-                return false;
+                player.sendMessage(
+                        ChatColor.DARK_RED
+                                + "GiveIt: You do not have permission to use the /givemeadd command"); // $NON-NLS-1$
+                return true;
             }
         } else if (commandName.equalsIgnoreCase("givemeremove")
                 && trimmedArgs.length == 1) { // $NON-NLS-1$
-            System.out.println(player);
             // Check for permissions plugin
             if (this.perm == true && !Permissions.has(player, "giveit.modify")) { // $NON-NLS-1$
                 player.sendMessage(
                         ChatColor.DARK_RED
-                                + "You do not have permission to use GiveIt"); // $NON-NLS-1$
+                                + "GiveIt: You do not have permission to use the /givemeremove command"); // $NON-NLS-1$
                 return true;
             } else if (this.perm == true
                     && Permissions.has(player, "giveit.modify") == true) { // $NON-NLS-1$
@@ -242,9 +249,29 @@ public class GiveIt extends JavaPlugin {
                     e.printStackTrace();
                 }
             } else if (this.mods.contains(player.getName()) == false) {
-                return false;
+                player.sendMessage(
+                        ChatColor.DARK_RED
+                                + "GiveIt: You do not have permission to use the /givemeremove command"); // $NON-NLS-1$
+                return true;
             }
-        }        	    
+        } else if (commandName.equalsIgnoreCase("giveto")) {
+            if (this.perm == true && !Permissions.has(player, "giveit.to")) { // $NON-NLS-1$
+                player.sendMessage(
+                        ChatColor.DARK_RED
+                                + "GiveIt: You do not have permission to use the /giveto command"); // $NON-NLS-1$
+                return true;
+            } else if (this.perm == true
+                    && Permissions.has(player, "giveit.to") == true) { // $NON-NLS-1$
+                return this.giveto.giveto(sender, trimmedArgs);
+            } else if (this.mods.contains(player.getName()) == true) {
+                return this.giveto.giveto(sender, trimmedArgs);
+            } else if (this.mods.contains(player.getName()) == false) {
+                player.sendMessage(
+                        ChatColor.DARK_RED
+                                + "GiveIt: You do not have permission to use the /giveto command"); // $NON-NLS-1$
+                return true;
+            }
+        }
         return false;
     }
 
