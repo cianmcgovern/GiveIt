@@ -35,4 +35,4 @@ commands:
      description: Gives an item to a player
      usage: |
            /<command> [player] [item] [amount] [durability]
-           Example: /<command> 278 5 cian1500ww
+           Example: /<command> cian1500ww 278 5
