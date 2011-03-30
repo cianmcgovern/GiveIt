@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -48,7 +49,7 @@ public class GiveMeAdd {
             out.write(itemid + "=" + amount); // $NON-NLS-1$
             out.newLine();
             out.close();
-            player.sendMessage("GiveIt: Item added to allowed list"); // $NON-NLS-1$
+            player.sendMessage(ChatColor.BLUE+"GiveIt: Item added to allowed list"); // $NON-NLS-1$
             GiveIt.prop.load(GiveIt.is);
             return true;
         } else if (trimmedArgs.length <= 2) {
@@ -61,7 +62,7 @@ public class GiveMeAdd {
             out.write(itemid + "=" + amount); // $NON-NLS-1$
             out.newLine();
             out.close();
-            player.sendMessage("GiveIt: Item added to allowed list"); // $NON-NLS-1$
+            player.sendMessage(ChatColor.BLUE+"GiveIt: Item added to allowed list"); // $NON-NLS-1$
             GiveIt.prop.load(GiveIt.is);
             return true;
         } else if (trimmedArgs.length > 2 && trimmedArgs[ 2 ] != null) {
@@ -76,7 +77,7 @@ public class GiveMeAdd {
             out.write(itemid + "=" + amount + "." + chosen_player); // $NON-NLS-1$ //$NON-NLS-2$
             out.newLine();
             out.close();
-            player.sendMessage("GiveIt: Item added to allowed list"); // $NON-NLS-1$
+            player.sendMessage(ChatColor.BLUE+"GiveIt: Item added to allowed list"); // $NON-NLS-1$
             GiveIt.prop.load(GiveIt.is);
 
             return true;
@@ -110,7 +111,7 @@ public class GiveMeAdd {
             GiveIt.prop.remove(itemid);
             GiveIt.prop.load(GiveIt.is);
             player.sendMessage(
-                    "GiveIt: Successfully removed item number " + itemid); // $NON-NLS-1$
+                    ChatColor.BLUE+"GiveIt: Successfully removed item number " + itemid); // $NON-NLS-1$
             return true;
         } 
         return true;

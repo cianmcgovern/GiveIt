@@ -96,17 +96,10 @@ public class GiveTo {
                 this.log.writeOut(player, item, trimmedArgs[ 2 ]);
                 return true;
             } // Send a message to the player telling them to choose a lower amount
-            else if (Integer.parseInt(trimmedArgs[ 2 ]) > this.amount
-                    && this.name.equalsIgnoreCase(player.getName())) {
+            else if (Integer.parseInt(trimmedArgs[ 2 ]) > this.amount) {
                 player.sendMessage(
                         ChatColor.DARK_RED
                                 + "GiveIt: Sorry, please choose a lower amount");
-                return true;
-            } // $NON-NLS-1$
-            else if (!this.name.equalsIgnoreCase(player.getName())) {
-                player.sendMessage(
-                        ChatColor.DARK_RED
-                                + "GiveIt: Sorry, but you are not allowed to spawn that item");
                 return true;
             } // $NON-NLS-1$
           
