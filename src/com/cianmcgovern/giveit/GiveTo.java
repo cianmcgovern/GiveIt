@@ -20,7 +20,6 @@ public class GiveTo {
     private IdChange idchange = new IdChange();
     private int amount = GiveIt.amount;
     private String name = GiveIt.name;
-    private final LogToFile log = new LogToFile();
 	
     public boolean giveto(CommandSender sender, String[] trimmedArgs) {
 		
@@ -56,8 +55,6 @@ public class GiveTo {
 
                 itemstack.setAmount(Integer.parseInt(trimmedArgs[ 2 ]));
                 inventory.addItem(itemstack);
-                // Log the player's requested items to log file
-                this.log.writeOut(player, item, trimmedArgs[ 2 ]);
                 player.sendMessage(
                         ChatColor.BLUE + "GiveIt: Item added to your inventory"); // $NON-NLS-1$
             } // Send a message to the player telling them to choose a lower amount
@@ -92,8 +89,6 @@ public class GiveTo {
                         ChatColor.BLUE + "GiveIt: You have been given "
                         + trimmedArgs[2] + " of " + item + " by "
                         + player.getDisplayName());
-                // Log the player's requested items to log file
-                this.log.writeOut(player, item, trimmedArgs[ 2 ]);
                 return true;
             } // Send a message to the player telling them to choose a lower amount
             else if (Integer.parseInt(trimmedArgs[ 2 ]) > this.amount) {
