@@ -54,6 +54,10 @@ public class GiveTo {
                 ItemStack itemstack = new ItemStack(Integer.valueOf(item));
 
                 itemstack.setAmount(Integer.parseInt(trimmedArgs[ 2 ]));
+                if ((trimmedArgs.length > 3)
+                        && trimmedArgs[ 3 ].isEmpty() == false) {
+                    itemstack.setDurability(Short.parseShort(trimmedArgs[ 2 ]));
+                }
                 inventory.addItem(itemstack);
                 player.sendMessage(
                         ChatColor.BLUE + "GiveIt: Item added to your inventory"); // $NON-NLS-1$
@@ -78,7 +82,6 @@ public class GiveTo {
                 itemstack.setAmount(Integer.parseInt(trimmedArgs[ 2 ]));
                 if ((trimmedArgs.length > 3)
                         && trimmedArgs[ 3 ].isEmpty() == false) {
-                    System.out.println("Detected extra arg!!"); // $NON-NLS-1$
                     itemstack.setDurability(Short.parseShort(trimmedArgs[ 2 ]));
                 }
                 inventory.addItem(itemstack);

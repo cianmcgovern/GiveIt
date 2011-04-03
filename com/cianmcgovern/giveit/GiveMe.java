@@ -56,7 +56,6 @@ public class GiveMe {
                 itemstack.setAmount(Integer.parseInt(trimmedArgs[ 1 ]));
                 if ((trimmedArgs.length > 2)
                         && trimmedArgs[ 2 ].isEmpty() == false) {
-                    System.out.println("Detected extra arg!!"); // $NON-NLS-1$
                     itemstack.setDurability(Short.parseShort(trimmedArgs[ 2 ]));
                 }
                 inventory.addItem(itemstack);
@@ -85,7 +84,6 @@ public class GiveMe {
                 itemstack.setAmount(Integer.parseInt(trimmedArgs[ 1 ]));
                 if ((trimmedArgs.length > 2)
                         && trimmedArgs[ 2 ].isEmpty() == false) {
-                    System.out.println("Detected extra arg!!"); // $NON-NLS-1$
                     itemstack.setDurability(Short.parseShort(trimmedArgs[ 2 ]));
                 }
                 inventory.addItem(itemstack);
